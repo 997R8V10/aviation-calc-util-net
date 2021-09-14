@@ -6,4 +6,8 @@
     <FileVersion>0.3.0</FileVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="PShivaraman.AviationCalcUtil" Version="0.3.0" />
+  </ItemGroup>
+
 </Project>
