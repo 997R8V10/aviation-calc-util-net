@@ -55,6 +55,10 @@ namespace AviationCalcUtilNet.GeoTools.MagneticTools
         [DllImport("aviationcalc")]
         private static extern void MagneticFieldElementsSetIncl(IntPtr ptr, double newIncl);
 
+        internal MagneticFieldElements(IntPtr ptr)
+        {
+            this.ptr = ptr;
+        }
         public MagneticFieldElements()
         {
             ptr = CreateMagneticFieldElements();
