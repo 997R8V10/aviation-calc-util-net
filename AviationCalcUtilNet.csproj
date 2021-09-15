@@ -20,4 +20,16 @@
     <PackageReference Include="PShivaraman.AviationCalcUtil" Version="0.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="AviationCalcUtilNetTests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="AviationCalcUtilNetTests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="AviationCalcUtilNetTests\**" />
+  </ItemGroup>
+
 </Project>
