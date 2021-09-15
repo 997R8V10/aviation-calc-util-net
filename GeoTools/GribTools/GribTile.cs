@@ -100,7 +100,6 @@ namespace AviationCalcUtilNet.GeoTools.GribTools
         public override int GetHashCode()
         {
             // TODO: write your implementation of GetHashCode() here
-            throw new NotImplementedException();
             return base.GetHashCode();
         }
 
