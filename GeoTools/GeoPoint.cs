@@ -51,27 +51,27 @@ namespace AviationCalcUtilNet.GeoTools
             return GeoPointDistanceM(point1.ptr, point2.ptr);
         }
 
-        public double FlatDistanceM(GeoPoint point1, GeoPoint point2)
+        public static double FlatDistanceM(GeoPoint point1, GeoPoint point2)
         {
             return GeoPointFlatDistanceM(point1.ptr, point2.ptr);
         }
 
-        public double FlatDistanceNMi(GeoPoint point1, GeoPoint point2)
+        public static double FlatDistanceNMi(GeoPoint point1, GeoPoint point2)
         {
             return GeoPointFlatDistanceNMi(point1.ptr, point2.ptr);
         }
 
-        public double DistanceM(GeoPoint point1, GeoPoint point2)
+        public static double DistanceM(GeoPoint point1, GeoPoint point2)
         {
             return GeoPointDistanceM(point1.ptr, point2.ptr);
         }
 
-        public double DistanceNMi(GeoPoint point1, GeoPoint point2)
+        public static double DistanceNMi(GeoPoint point1, GeoPoint point2)
         {
             return GeoPointDistanceNMi(point1.ptr, point2.ptr);
         }
 
-        public GeoPoint Intersection(GeoPoint point1, double bearing1, GeoPoint point2, double bearing2)
+        public static GeoPoint Intersection(GeoPoint point1, double bearing1, GeoPoint point2, double bearing2)
         {
             IntPtr ptr = GeoPointIntersection(point1.ptr, bearing1, point2.ptr, bearing2);
             if (ptr == IntPtr.Zero)
@@ -82,12 +82,12 @@ namespace AviationCalcUtilNet.GeoTools
             return new GeoPoint(ptr);
         }
 
-        public double InitialBearing(GeoPoint point1, GeoPoint point2)
+        public static double InitialBearing(GeoPoint point1, GeoPoint point2)
         {
             return GeoPointInitialBearing(point1.ptr, point2.ptr);
         }
 
-        public double FinalBearing(GeoPoint point1, GeoPoint point2)
+        public static double FinalBearing(GeoPoint point1, GeoPoint point2)
         {
             return GeoPointFinalBearing(point1.ptr, point2.ptr);
         }
