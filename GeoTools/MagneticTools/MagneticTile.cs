@@ -23,7 +23,7 @@ namespace AviationCalcUtilNet.GeoTools.MagneticTools
         [DllImport("aviationcalc")] private static extern double MagneticTileGetLeftLon(IntPtr tile);
         [DllImport("aviationcalc")] private static extern double MagneticTileGetRightLon(IntPtr tile);
 
-        public static double RESOLUTION = MagneticTileGetResolution();
+        public static double RESOLUTION => MagneticTileGetResolution();
 
         internal MagneticTile(IntPtr ptr)
         {

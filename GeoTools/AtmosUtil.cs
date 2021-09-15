@@ -7,7 +7,16 @@ namespace AviationCalcUtilNet.GeoTools
 {
     public static class AtmosUtil
     {
-        [DllImport("aviationcalc")] private static extern double AtmosUtilCalculateDryAirDensity(double p, double T);
+		[DllImport("aviationcalc")] private static extern double AtmosUtilGetConst_R_DRY_AIR();
+		[DllImport("aviationcalc")] private static extern double AtmosUtilGetConst_SPEC_HEAT_RATIO_AIR();
+		[DllImport("aviationcalc")] private static extern double AtmosUtilGetConst_ISA_STD_TEMP_K();
+		[DllImport("aviationcalc")] private static extern double AtmosUtilGetConst_ISA_STD_TEMP_C();
+		[DllImport("aviationcalc")] private static extern double AtmosUtilGetConst_ISA_STD_PRES_Pa();
+		[DllImport("aviationcalc")] private static extern double AtmosUtilGetConst_ISA_STD_PRES_hPa();
+		[DllImport("aviationcalc")] private static extern double AtmosUtilGetConst_ISA_STD_DENS();
+		[DllImport("aviationcalc")] private static extern double AtmosUtilGetConst_ISA_STD_LAPSE_RATE();
+		[DllImport("aviationcalc")] private static extern double AtmosUtilGetConst_EARTH_G();
+		[DllImport("aviationcalc")] private static extern double AtmosUtilCalculateDryAirDensity(double p, double T);
         [DllImport("aviationcalc")] private static extern double AtmosUtilCalculateImpactPressure1(double cas);
         [DllImport("aviationcalc")] private static extern double AtmosUtilCalculateImpactPressure2(double M, double p);
         [DllImport("aviationcalc")] private static extern double AtmosUtilCalculateCalibratedAirspeed(double qc);
@@ -21,6 +30,51 @@ namespace AviationCalcUtilNet.GeoTools
         [DllImport("aviationcalc")] private static extern double AtmosUtilCalculateSpeedOfSoundDryAir(double T);
         [DllImport("aviationcalc")] private static extern double AtmosUtilConvertIasToTas(double ias_kts, double refPress_hPa, double alt_ft, double refAlt_ft, double refTemp_K, out double mach);
         [DllImport("aviationcalc")] private static extern double AtmosUtilConvertTasToIas(double tas_kts, double refPress_hPa, double alt_ft, double refAlt_ft, double refTemp_K, out double mach);
+
+		/// <summary>
+		/// Specific Gas Constant for dry air (J/(kg*K))
+		/// </summary>
+		public static double R_DRY_AIR => AtmosUtilGetConst_R_DRY_AIR();
+
+		/// <summary>
+		/// Ratio of specific heat at a constant pressure to heat at a constant volume for air
+		/// </summary>
+		public static double SPEC_HEAT_RATIO_AIR => AtmosUtilGetConst_SPEC_HEAT_RATIO_AIR();
+
+		/// <summary>
+		/// ISA Sea Level Standard Temperature (K)
+		/// </summary>
+		public static double ISA_STD_TEMP_K => AtmosUtilGetConst_ISA_STD_TEMP_K();
+
+		/// <summary>
+		/// ISA Sea Level Standard Temperature (C)
+		/// </summary>
+		public static double ISA_STD_TEMP_C => AtmosUtilGetConst_ISA_STD_TEMP_C();
+
+		/// <summary>
+		/// ISA Sea Level Standard Pressure (Pa)
+		/// </summary>
+		public static double ISA_STD_PRES_Pa => AtmosUtilGetConst_ISA_STD_PRES_Pa();
+
+		/// <summary>
+		/// ISA Sea Level Standard Pressure (hPa)
+		/// </summary>
+		public static double ISA_STD_PRES_hPa => AtmosUtilGetConst_ISA_STD_PRES_hPa();
+
+		/// <summary>
+		/// ISA Sea Level Air Density (kg/m^3)
+		/// </summary>
+		public static double ISA_STD_DENS => AtmosUtilGetConst_ISA_STD_DENS();
+
+		/// <summary>
+		/// ISA Standard Lapse Rate (K/m) below 11000m altitude.
+		/// </summary>
+		public static double ISA_STD_LAPSE_RATE => AtmosUtilGetConst_ISA_STD_LAPSE_RATE();
+
+		/// <summary>
+		/// Earth Surface Gravitational Acceleration (m/s^2)
+		/// </summary>
+		public static double EARTH_G => AtmosUtilGetConst_EARTH_G();
 
 		/// <summary>
 		/// Calculates the density of dry air at a given temperature and pressure.
