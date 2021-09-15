@@ -17,10 +17,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="PShivaraman.AviationCalcUtil" Version="0.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="AviationCalcUtilNetTests\**" />
   </ItemGroup>
 
@@ -30,6 +26,10 @@
 
   <ItemGroup>
     <None Remove="AviationCalcUtilNetTests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PShivaraman.AviationCalcUtil" Version="0.3.0" />
   </ItemGroup>
 
 </Project>

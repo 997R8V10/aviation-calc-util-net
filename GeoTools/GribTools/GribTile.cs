@@ -10,7 +10,7 @@ namespace AviationCalcUtilNet.GeoTools.GribTools
     {
         internal IntPtr ptr;
 
-        [DllImport("aviationcalc")] private static extern IntPtr GribTileFindOrCreateGribTile(IntPtr pos, ulong dateTime);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr GribTileFindOrCreateGribTile(IntPtr pos, ulong dateTime);
         [DllImport("aviationcalc")] private static extern IntPtr CreateGribTile(IntPtr pos, ulong dateTime);
         [DllImport("aviationcalc")] private static extern void DisposeGribTile(IntPtr tile);
         [DllImport("aviationcalc")] private static extern ulong GribTileGetForecastDateUtc(IntPtr tile);

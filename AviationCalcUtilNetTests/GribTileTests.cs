@@ -15,8 +15,9 @@ namespace AviationCalcUtilNetTests
         [Test]
         public void TestFetchGribTile1()
         {
-            var tile = GribTile.FindOrCreateGribTile(new GeoPoint(0, 0), DateTime.Now);
-            Assert.Pass();
+            var geoPoint = new GeoPoint(0, 0);
+            var tile = GribTile.FindOrCreateGribTile(geoPoint, DateTime.Now);
+            Assert.NotNull(tile);
         }
     }
 }
