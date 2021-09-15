@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace AviationCalcUtilNet.MagneticTools
+namespace AviationCalcUtilNet.GeoTools.MagneticTools
 {
     public class MagneticFieldElements
     {

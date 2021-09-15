@@ -103,5 +103,10 @@ namespace AviationCalcUtilNet.GeoTools.GribTools
             throw new NotImplementedException();
             return base.GetHashCode();
         }
+
+        ~GribTile()
+        {
+            DisposeGribTile(ptr);
+        }
     }
 }
