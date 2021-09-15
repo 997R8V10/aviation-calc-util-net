@@ -12,7 +12,7 @@ namespace AviationCalcUtilNet.GeoTools.GribTools
 		[DllImport("aviationcalc")] private static extern IntPtr CreateGribDataPoint(double lat, double lon, int level_hPa);
 		[DllImport("aviationcalc")] private static extern void DisposeGribDataPoint(IntPtr point);
 		[DllImport("aviationcalc")] private static extern double GribDataPointGetDistanceFrom(IntPtr point, IntPtr pos);
-		[DllImport("aviationcalc"] private static extern IntPtr GribDataPointToString(IntPtr point);
+		[DllImport("aviationcalc")] private static extern IntPtr GribDataPointToString(IntPtr point);
 		[DllImport("aviationcalc")] private static extern double GribDataPointGetLatitude(IntPtr point);
 		[DllImport("aviationcalc")] private static extern double GribDataPointGetLongitude(IntPtr point);
 		[DllImport("aviationcalc")] private static extern double GribDataPointGetLongitudeNormalized(IntPtr point);
