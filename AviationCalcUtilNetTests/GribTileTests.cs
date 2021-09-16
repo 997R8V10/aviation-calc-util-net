@@ -13,6 +13,7 @@ namespace AviationCalcUtilNetTests
         {
         }
 
+        
         [Test]
         public void TestFetchGribTile1()
         {
@@ -23,6 +24,7 @@ namespace AviationCalcUtilNetTests
             int i = 0;
             while ((point = tile.GetClosestPoint(geoPoint)) == null && i < 30){
                 Thread.Sleep(1000);
+                i++;
             }
             Assert.NotNull(point);
 
