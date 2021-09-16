@@ -6,7 +6,7 @@ using System.Text;
 namespace AviationCalcUtilNet.InteropTools
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal class InteropDateStruct
+    internal struct InteropDateStruct
     {
         internal int year;
         internal int month;
