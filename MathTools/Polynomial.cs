@@ -11,7 +11,7 @@ namespace AviationCalcUtilNet.MathTools
         [DllImport("aviationcalc")] private static extern void DisposePolynomial(IntPtr ptr);
         [DllImport("aviationcalc")] private static extern double PolynomialEvaluate(IntPtr ptr, double x);
         [DllImport("aviationcalc")] private static extern IntPtr PolynomialDerivative(IntPtr ptr, int n);
-        [DllImport("aviationcalc")] private static extern double[] PolynomialGetCoefficients(IntPtr ptr, out int size);
+        [DllImport("aviationcalc")] private static extern IntPtr PolynomialGetCoefficients(IntPtr ptr, out int size);
 
         internal Polynomial(IntPtr ptr)
         {
@@ -45,7 +45,9 @@ namespace AviationCalcUtilNet.MathTools
 
         public List<double> GetCoefficients()
         {
-            var asArray = PolynomialGetCoefficients(ptr, out var size);
+            IntPtr returned = PolynomialGetCoefficients(ptr, out var size);
+            double[] asArray = new double[size];
+            Marshal.Copy(returned, asArray, 0, size);
             return new List<double>(asArray);
         }
         
