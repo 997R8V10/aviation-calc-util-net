@@ -10,12 +10,12 @@ namespace AviationCalcUtilNet.GeoTools.MagneticTools
     {
         internal IntPtr ptr;
 
-        [DllImport("aviationcalc")] private static extern IntPtr CreateMagModel(double modelEpoch, [MarshalAs(UnmanagedType.LPStr)] string modelName, InteropDateStruct dStruct, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] coefficients, int coeffsSize);
-        [DllImport("aviationcalc")] private static extern void DisposeMagModel(IntPtr model);
-        [DllImport("aviationcalc")] private static extern IntPtr MagModelGetCoeffs(IntPtr model, int n, int m);
-        [DllImport("aviationcalc")] private static extern double MagModelGetModelEpoch(IntPtr model);
-        [DllImport("aviationcalc")] private static extern IntPtr MagModelGetModelName(IntPtr model);
-        [DllImport("aviationcalc")] private static extern InteropDateStruct MagModelGetReleaseDate(IntPtr model);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CreateMagModel(double modelEpoch, [MarshalAs(UnmanagedType.LPStr)] string modelName, InteropDateStruct dStruct, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] coefficients, int coeffsSize);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void DisposeMagModel(IntPtr model);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr MagModelGetCoeffs(IntPtr model, int n, int m);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double MagModelGetModelEpoch(IntPtr model);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr MagModelGetModelName(IntPtr model);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern InteropDateStruct MagModelGetReleaseDate(IntPtr model);
 
         internal MagneticModel(IntPtr ptr)
         {

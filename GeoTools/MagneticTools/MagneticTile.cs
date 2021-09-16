@@ -10,18 +10,18 @@ namespace AviationCalcUtilNet.GeoTools.MagneticTools
     {
         internal IntPtr ptr;
 
-        [DllImport("aviationcalc")] private static extern double MagneticTileGetResolution();
-        [DllImport("aviationcalc")] private static extern IntPtr MagneticTileFindOrCreateTile(IntPtr pos, InteropDateStruct dStruct);
-        [DllImport("aviationcalc")] private static extern IntPtr CreateMagneticTile(IntPtr point, InteropDateStruct dStruct);
-        [DllImport("aviationcalc")] private static extern void DisposeMagneticTile(IntPtr tile);
-        [DllImport("aviationcalc")] private static extern bool MagneticTileIsValid(IntPtr tile, InteropDateStruct dStruct);
-        [DllImport("aviationcalc")] private static extern IntPtr MagneticTileGetData(IntPtr tile);
-        [DllImport("aviationcalc")] private static extern bool MagneticTileIsPointInTile(IntPtr tile, IntPtr point);
-        [DllImport("aviationcalc")] private static extern IntPtr MagneticTileGetCenterPoint(IntPtr tile);
-        [DllImport("aviationcalc")] private static extern double MagneticTileGetBottomLat(IntPtr tile);
-        [DllImport("aviationcalc")] private static extern double MagneticTileGetTopLat(IntPtr tile);
-        [DllImport("aviationcalc")] private static extern double MagneticTileGetLeftLon(IntPtr tile);
-        [DllImport("aviationcalc")] private static extern double MagneticTileGetRightLon(IntPtr tile);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double MagneticTileGetResolution();
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr MagneticTileFindOrCreateTile(IntPtr pos, InteropDateStruct dStruct);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CreateMagneticTile(IntPtr point, InteropDateStruct dStruct);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void DisposeMagneticTile(IntPtr tile);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern bool MagneticTileIsValid(IntPtr tile, InteropDateStruct dStruct);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr MagneticTileGetData(IntPtr tile);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern bool MagneticTileIsPointInTile(IntPtr tile, IntPtr point);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr MagneticTileGetCenterPoint(IntPtr tile);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double MagneticTileGetBottomLat(IntPtr tile);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double MagneticTileGetTopLat(IntPtr tile);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double MagneticTileGetLeftLon(IntPtr tile);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double MagneticTileGetRightLon(IntPtr tile);
 
         public static double RESOLUTION => MagneticTileGetResolution();
 

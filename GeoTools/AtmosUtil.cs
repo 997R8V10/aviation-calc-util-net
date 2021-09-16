@@ -7,29 +7,29 @@ namespace AviationCalcUtilNet.GeoTools
 {
     public static class AtmosUtil
     {
-		[DllImport("aviationcalc")] private static extern double AtmosUtilGetConst_R_DRY_AIR();
-		[DllImport("aviationcalc")] private static extern double AtmosUtilGetConst_SPEC_HEAT_RATIO_AIR();
-		[DllImport("aviationcalc")] private static extern double AtmosUtilGetConst_ISA_STD_TEMP_K();
-		[DllImport("aviationcalc")] private static extern double AtmosUtilGetConst_ISA_STD_TEMP_C();
-		[DllImport("aviationcalc")] private static extern double AtmosUtilGetConst_ISA_STD_PRES_Pa();
-		[DllImport("aviationcalc")] private static extern double AtmosUtilGetConst_ISA_STD_PRES_hPa();
-		[DllImport("aviationcalc")] private static extern double AtmosUtilGetConst_ISA_STD_DENS();
-		[DllImport("aviationcalc")] private static extern double AtmosUtilGetConst_ISA_STD_LAPSE_RATE();
-		[DllImport("aviationcalc")] private static extern double AtmosUtilGetConst_EARTH_G();
-		[DllImport("aviationcalc")] private static extern double AtmosUtilCalculateDryAirDensity(double p, double T);
-        [DllImport("aviationcalc")] private static extern double AtmosUtilCalculateImpactPressure1(double cas);
-        [DllImport("aviationcalc")] private static extern double AtmosUtilCalculateImpactPressure2(double M, double p);
-        [DllImport("aviationcalc")] private static extern double AtmosUtilCalculateCalibratedAirspeed(double qc);
-        [DllImport("aviationcalc")] private static extern double AtmosUtilCalculateMachNumber(double qc, double p);
-        [DllImport("aviationcalc")] private static extern double AtmosUtilCalculateEas(double M, double p);
-        [DllImport("aviationcalc")] private static extern double AtmosUtilConvertMachToTas(double M, double T);
-        [DllImport("aviationcalc")] private static extern double AtmosUtilConvertTasToMach(double tas, double T);
-        [DllImport("aviationcalc")] private static extern double AtmosUtilCalculatePressureAtAlt(double h, double h0, double p0, double T);
-        [DllImport("aviationcalc")] private static extern double AtmosUtilCalculateTempAtAlt(double h, double h0, double T0);
-        [DllImport("aviationcalc")] private static extern double AtmosUtilCalculateDensityAltitude(double p, double T);
-        [DllImport("aviationcalc")] private static extern double AtmosUtilCalculateSpeedOfSoundDryAir(double T);
-        [DllImport("aviationcalc")] private static extern double AtmosUtilConvertIasToTas(double ias_kts, double refPress_hPa, double alt_ft, double refAlt_ft, double refTemp_K, out double mach);
-        [DllImport("aviationcalc")] private static extern double AtmosUtilConvertTasToIas(double tas_kts, double refPress_hPa, double alt_ft, double refAlt_ft, double refTemp_K, out double mach);
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilGetConst_R_DRY_AIR();
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilGetConst_SPEC_HEAT_RATIO_AIR();
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilGetConst_ISA_STD_TEMP_K();
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilGetConst_ISA_STD_TEMP_C();
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilGetConst_ISA_STD_PRES_Pa();
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilGetConst_ISA_STD_PRES_hPa();
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilGetConst_ISA_STD_DENS();
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilGetConst_ISA_STD_LAPSE_RATE();
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilGetConst_EARTH_G();
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilCalculateDryAirDensity(double p, double T);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilCalculateImpactPressure1(double cas);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilCalculateImpactPressure2(double M, double p);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilCalculateCalibratedAirspeed(double qc);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilCalculateMachNumber(double qc, double p);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilCalculateEas(double M, double p);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilConvertMachToTas(double M, double T);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilConvertTasToMach(double tas, double T);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilCalculatePressureAtAlt(double h, double h0, double p0, double T);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilCalculateTempAtAlt(double h, double h0, double T0);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilCalculateDensityAltitude(double p, double T);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilCalculateSpeedOfSoundDryAir(double T);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilConvertIasToTas(double ias_kts, double refPress_hPa, double alt_ft, double refAlt_ft, double refTemp_K, out double mach);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilConvertTasToIas(double tas_kts, double refPress_hPa, double alt_ft, double refAlt_ft, double refTemp_K, out double mach);
 
 		/// <summary>
 		/// Specific Gas Constant for dry air (J/(kg*K))

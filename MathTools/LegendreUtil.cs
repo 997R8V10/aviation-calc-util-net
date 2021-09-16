@@ -5,9 +5,9 @@ namespace AviationCalcUtilNet.MathTools
 {
     public static class LegendreUtil
     {
-        [DllImport("aviationcalc")] private static extern IntPtr LegendreUtilPolynomial(int n);
-        [DllImport("aviationcalc")] private static extern double LegendreUtilFactorialRatio(int n, int m);
-        [DllImport("aviationcalc")] private static extern double LegendreUtilLegendreFunction(int n, int m, double x);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr LegendreUtilPolynomial(int n);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double LegendreUtilFactorialRatio(int n, int m);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double LegendreUtilLegendreFunction(int n, int m, double x);
 
         public static Polynomial LegendrePolynomial(int n)
         {

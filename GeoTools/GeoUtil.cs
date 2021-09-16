@@ -5,94 +5,94 @@ namespace AviationCalcUtilNet.GeoTools
 {
     public static class GeoUtil
     {
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilCalculateDirectBearingAfterTurn(IntPtr aircraft, IntPtr waypoint, double r, double curBearing);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilCalculateCrossTrackErrorM(IntPtr aircraft, IntPtr waypoint, double course, out double requiredCourse, out double alongTrackDistanceM);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilCalculateTurnLeadInDistance(IntPtr ptr, double theta, double r);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilCalculateTurnLeadDistance(IntPtr pos, IntPtr wp, double trueTrack, double tas, double course, double trueWindDir, double windSpd, out double radiusOfTurn, out IntPtr intersection);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr GeoUtilFindIntersection(IntPtr position, IntPtr wp, double trueTrack, double course);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilNormalizeLongitude(double lon);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilNormalizeHeading(double hdg);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilCalculateMaxBankAngle(double groundSpeed, double bankLimit, double turnRate);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilCalculateRadiusOfTurn(double bankAngle, double groundSpeed);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilCalculateBankAngle(double radiusOfTurn, double groundSpeed);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilCalculateConstantRadiusTurn(double startBearing, double turnAmount, double windBearing, double windSpeed, double tas);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilGetHeadwindComponent(double windSpeed, double windBearing, double bearing);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilCalculateDistanceTravelledNMi(double groundSpeedKts, double timeMs);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilCalculateDegreesTurned(double distTravelledNMi, double radiusOfTurnNMi);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilCalculateEndHeading(double startHeading, double degreesTurned, bool isRightTurn);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern void GeoUtilCalculateChordHeadingAndDistance(double startHeading, double degreesTurned, double radiusOfTurnNMi, bool isRightTurn, out double chordHeading, out double chordDistance);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilConvertIndicatedToAbsoluteAlt(double alt_ind_ft, double pres_set_hpa, double sfc_pres_hpa);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilConvertAbsoluteToIndicatedAlt(double alt_abs_ft, double pres_set_hpa, double sfc_pres_hpa);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilConvertIndicatedToPressureAlt(double alt_ind_ft, double pres_set_hpa);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilCalculateIsaTemp(double alt_pres_ft);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilConvertPressureToDensityAlt(double alt_pres_ft, double sat);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilConvertIasToTas(double ias, double pres_set_hpa, double alt_ind_ft, double sat);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilConvertTasToIas(double tas, double pres_set_hpa, double alt_ind_ft, double sat);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilConvertIasToTasFromDensityAltitude(double ias, double alt_dens_ft);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilConvertTasToIasDensityAltitude(double tas, double alt_dens_ft);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilCalculateTurnAmount(double currentHeading, double desiredHeading);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilGetEarthRadiusM();
         
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilGetStdPresHpa();
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilGetStdTempC();
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilGetStdLapseRate();
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilGetStdPresDrop();
         
         /// <summary>

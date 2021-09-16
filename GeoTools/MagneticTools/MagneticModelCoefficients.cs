@@ -10,16 +10,16 @@ namespace AviationCalcUtilNet.GeoTools.MagneticTools
     {
         internal IntPtr ptr;
 
-        [DllImport("aviationcalc")] private static extern IntPtr CopyMagModelCoeffs(IntPtr o);
-        [DllImport("aviationcalc")] private static extern IntPtr CreateMagModelCoeffs(int n, int m, double g_nm, double h_nm, double g_dot_nm, double h_dot_nm);
-        [DllImport("aviationcalc")] private static extern void DisposeMagModelCoeffs(IntPtr coeffs);
-        [DllImport("aviationcalc")] private static extern int MagModelCoeffsGetN(IntPtr coeffs);
-        [DllImport("aviationcalc")] private static extern int MagModelCoeffsGetM(IntPtr coeffs);
-        [DllImport("aviationcalc")] private static extern double MagModelCoeffsGetG(IntPtr coeffs);
-        [DllImport("aviationcalc")] private static extern double MagModelCoeffsGetH(IntPtr coeffs);
-        [DllImport("aviationcalc")] private static extern double MagModelCoeffsGetGDot(IntPtr coeffs);
-        [DllImport("aviationcalc")] private static extern double MagModelCoeffsGetHDot(IntPtr coeffs);
-        [DllImport("aviationcalc")] private static extern IntPtr MagModelCoeffsGetPointOnDate(IntPtr coeffs, double modelEpoch, InteropDateStruct dateStruct);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CopyMagModelCoeffs(IntPtr o);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CreateMagModelCoeffs(int n, int m, double g_nm, double h_nm, double g_dot_nm, double h_dot_nm);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void DisposeMagModelCoeffs(IntPtr coeffs);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern int MagModelCoeffsGetN(IntPtr coeffs);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern int MagModelCoeffsGetM(IntPtr coeffs);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double MagModelCoeffsGetG(IntPtr coeffs);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double MagModelCoeffsGetH(IntPtr coeffs);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double MagModelCoeffsGetGDot(IntPtr coeffs);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double MagModelCoeffsGetHDot(IntPtr coeffs);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr MagModelCoeffsGetPointOnDate(IntPtr coeffs, double modelEpoch, InteropDateStruct dateStruct);
 
 		internal MagneticModelCoefficients(IntPtr ptr)
         {

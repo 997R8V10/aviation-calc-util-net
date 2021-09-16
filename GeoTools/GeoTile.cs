@@ -9,16 +9,16 @@ namespace AviationCalcUtilNet.GeoTools
 	{
 		internal IntPtr ptr;
 
-		[DllImport("aviationcalc")] private static extern IntPtr CreateGeoTile(double botLat, double topLat, double leftLon, double rightLon);
-		[DllImport("aviationcalc")] private static extern IntPtr CreateGeoTileFromGeoPoint(IntPtr point, double resolutionDegs);
-		[DllImport("aviationcalc")] private static extern IntPtr CopyGeoTile(IntPtr point);
-		[DllImport("aviationcalc")] private static extern void DisposeGeoTile(IntPtr tile);
-		[DllImport("aviationcalc")] private static extern bool GeoTileIsPointInTile(IntPtr tile, IntPtr point);
-		[DllImport("aviationcalc")] private static extern IntPtr GeoTileGetCenterPoint(IntPtr tile);
-		[DllImport("aviationcalc")] private static extern double GeoTileGetBottomLat(IntPtr tile);
-		[DllImport("aviationcalc")] private static extern double GeoTileGetTopLat(IntPtr tile);
-		[DllImport("aviationcalc")] private static extern double GeoTileGetLeftLon(IntPtr tile);
-		[DllImport("aviationcalc")] private static extern double GeoTileGetRightLon(IntPtr tile);
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CreateGeoTile(double botLat, double topLat, double leftLon, double rightLon);
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CreateGeoTileFromGeoPoint(IntPtr point, double resolutionDegs);
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CopyGeoTile(IntPtr point);
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void DisposeGeoTile(IntPtr tile);
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern bool GeoTileIsPointInTile(IntPtr tile, IntPtr point);
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr GeoTileGetCenterPoint(IntPtr tile);
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoTileGetBottomLat(IntPtr tile);
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoTileGetTopLat(IntPtr tile);
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoTileGetLeftLon(IntPtr tile);
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoTileGetRightLon(IntPtr tile);
 
 		public GeoTile(double botLat, double topLat, double leftLon, double rightLon)
 		{

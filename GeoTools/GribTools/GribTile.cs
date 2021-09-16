@@ -11,19 +11,19 @@ namespace AviationCalcUtilNet.GeoTools.GribTools
         internal IntPtr ptr;
 
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr GribTileFindOrCreateGribTile(IntPtr pos, ulong dateTime);
-        [DllImport("aviationcalc")] private static extern IntPtr CreateGribTile(IntPtr pos, ulong dateTime);
-        [DllImport("aviationcalc")] private static extern void DisposeGribTile(IntPtr tile);
-        [DllImport("aviationcalc")] private static extern ulong GribTileGetForecastDateUtc(IntPtr tile);
-        [DllImport("aviationcalc")] private static extern IntPtr GribTileGetGribFileName(IntPtr tile);
-        [DllImport("aviationcalc")] private static extern IntPtr GribTileGetClosestPoint(IntPtr tile, IntPtr acftPos);
-        [DllImport("aviationcalc")] private static extern bool GribTileIsValid(IntPtr tile, ulong dateTime);
-        [DllImport("aviationcalc")] private static extern bool GribTileEquals(IntPtr tile, IntPtr o);
-        [DllImport("aviationcalc")] private static extern bool GribTileIsPointInTile(IntPtr tile, IntPtr point);
-        [DllImport("aviationcalc")] private static extern IntPtr GribTileGetCenterPoint(IntPtr tile);
-        [DllImport("aviationcalc")] private static extern double GribTileGetBottomLat(IntPtr tile);
-        [DllImport("aviationcalc")] private static extern double GribTileGetTopLat(IntPtr tile);
-        [DllImport("aviationcalc")] private static extern double GribTileGetLeftLon(IntPtr tile);
-        [DllImport("aviationcalc")] private static extern double GribTileGetRightLon(IntPtr tile);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CreateGribTile(IntPtr pos, ulong dateTime);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void DisposeGribTile(IntPtr tile);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern ulong GribTileGetForecastDateUtc(IntPtr tile);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr GribTileGetGribFileName(IntPtr tile);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr GribTileGetClosestPoint(IntPtr tile, IntPtr acftPos);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern bool GribTileIsValid(IntPtr tile, ulong dateTime);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern bool GribTileEquals(IntPtr tile, IntPtr o);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern bool GribTileIsPointInTile(IntPtr tile, IntPtr point);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr GribTileGetCenterPoint(IntPtr tile);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribTileGetBottomLat(IntPtr tile);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribTileGetTopLat(IntPtr tile);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribTileGetLeftLon(IntPtr tile);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribTileGetRightLon(IntPtr tile);
 
         public GribTile(GeoPoint pos, DateTime dateTime)
         {

@@ -7,11 +7,11 @@ namespace AviationCalcUtilNet.MathTools
     public class Polynomial
     {
         internal IntPtr ptr;
-        [DllImport("aviationcalc")] private static extern IntPtr CreatePolynomial(double[] coefficients, int coefficientsSize);
-        [DllImport("aviationcalc")] private static extern void DisposePolynomial(IntPtr ptr);
-        [DllImport("aviationcalc")] private static extern double PolynomialEvaluate(IntPtr ptr, double x);
-        [DllImport("aviationcalc")] private static extern IntPtr PolynomialDerivative(IntPtr ptr, int n);
-        [DllImport("aviationcalc")] private static extern IntPtr PolynomialGetCoefficients(IntPtr ptr, out int size);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CreatePolynomial(double[] coefficients, int coefficientsSize);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void DisposePolynomial(IntPtr ptr);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double PolynomialEvaluate(IntPtr ptr, double x);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr PolynomialDerivative(IntPtr ptr, int n);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr PolynomialGetCoefficients(IntPtr ptr, out int size);
 
         internal Polynomial(IntPtr ptr)
         {

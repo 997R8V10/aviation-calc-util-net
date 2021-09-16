@@ -7,28 +7,34 @@ namespace AviationCalcUtilNet.GeoTools
     {
         internal IntPtr ptr;
 
-        [DllImport("aviationcalc")] private static extern IntPtr CreateGeoPoint(double lat, double lon, double alt);
-        [DllImport("aviationcalc")] private static extern void DisposeGeoPoint(IntPtr ptr);
-        [DllImport("aviationcalc")] private static extern void GeoPointMoveByM(IntPtr ptr, double bearing, double distance);
-        [DllImport("aviationcalc")] private static extern void GeoPointMoveByNMi(IntPtr ptr, double bearing, double distance);
-        [DllImport("aviationcalc")] private static extern double GeoPointFlatDistanceM(IntPtr ptr1, IntPtr ptr2);
-        [DllImport("aviationcalc")] private static extern double GeoPointFlatDistanceNMi(IntPtr ptr1, IntPtr ptr2);
-        [DllImport("aviationcalc")] private static extern double GeoPointDistanceM(IntPtr ptr1, IntPtr ptr2);
-        [DllImport("aviationcalc")] private static extern double GeoPointDistanceNMi(IntPtr ptr1, IntPtr ptr2);
-        [DllImport("aviationcalc")] private static extern IntPtr GeoPointIntersection(IntPtr ptr1, double bearing1, IntPtr ptr2, double bearing2);
-        [DllImport("aviationcalc")] private static extern double GeoPointInitialBearing(IntPtr ptr1, IntPtr ptr2);
-        [DllImport("aviationcalc")] private static extern double GeoPointFinalBearing(IntPtr ptr1, IntPtr ptr2);
-        [DllImport("aviationcalc")] private static extern bool GeoPointEquals(IntPtr ptr1, IntPtr ptr2);
-        [DllImport("aviationcalc")] private static extern double GeoPointGetLat(IntPtr ptr);
-        [DllImport("aviationcalc")] private static extern void GeoPointSetLat(IntPtr ptr, double newLat);
-        [DllImport("aviationcalc")] private static extern double GeoPointGetLon(IntPtr ptr);
-        [DllImport("aviationcalc")] private static extern void GeoPointSetLon(IntPtr ptr, double newLon);
-        [DllImport("aviationcalc")] private static extern double GeoPointGetAlt(IntPtr ptr);
-        [DllImport("aviationcalc")] private static extern void GeoPointSetAlt(IntPtr ptr, double newAlt);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CreateGeoPoint(double lat, double lon, double alt);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CopyGeoPoint(IntPtr ptr);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void DisposeGeoPoint(IntPtr ptr);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void GeoPointMoveByM(IntPtr ptr, double bearing, double distance);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void GeoPointMoveByNMi(IntPtr ptr, double bearing, double distance);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointFlatDistanceM(IntPtr ptr1, IntPtr ptr2);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointFlatDistanceNMi(IntPtr ptr1, IntPtr ptr2);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointDistanceM(IntPtr ptr1, IntPtr ptr2);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointDistanceNMi(IntPtr ptr1, IntPtr ptr2);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr GeoPointIntersection(IntPtr ptr1, double bearing1, IntPtr ptr2, double bearing2);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointInitialBearing(IntPtr ptr1, IntPtr ptr2);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointFinalBearing(IntPtr ptr1, IntPtr ptr2);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern bool GeoPointEquals(IntPtr ptr1, IntPtr ptr2);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointGetLat(IntPtr ptr);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void GeoPointSetLat(IntPtr ptr, double newLat);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointGetLon(IntPtr ptr);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void GeoPointSetLon(IntPtr ptr, double newLon);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointGetAlt(IntPtr ptr);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void GeoPointSetAlt(IntPtr ptr, double newAlt);
 
         public GeoPoint(double lat = 0, double lon = 0, double alt = 0)
         {
             ptr = CreateGeoPoint(lat, lon, alt);
+        }
+
+        public GeoPoint(GeoPoint o)
+        {
+            ptr = CopyGeoPoint(o.ptr);
         }
 
         internal GeoPoint(IntPtr ptr)

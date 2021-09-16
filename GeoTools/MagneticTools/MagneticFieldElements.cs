@@ -7,52 +7,52 @@ namespace AviationCalcUtilNet.GeoTools.MagneticTools
     {
         internal IntPtr ptr;
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr CreateMagneticFieldElements();
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern void DisposeMagneticFieldElements(IntPtr ptr);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MagneticFieldElementsGetX(IntPtr ptr);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern void MagneticFieldElementsSetX(IntPtr ptr, double newX);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MagneticFieldElementsGetY(IntPtr ptr);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern void MagneticFieldElementsSetY(IntPtr ptr, double newY);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MagneticFieldElementsGetZ(IntPtr ptr);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern void MagneticFieldElementsSetZ(IntPtr ptr, double newZ);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MagneticFieldElementsGetH(IntPtr ptr);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern void MagneticFieldElementsSetH(IntPtr ptr, double newH);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MagneticFieldElementsGetF(IntPtr ptr);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern void MagneticFieldElementsSetF(IntPtr ptr, double newF);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MagneticFieldElementsGetDecl(IntPtr ptr);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern void MagneticFieldElementsSetDecl(IntPtr ptr, double newDecl);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MagneticFieldElementsGetIncl(IntPtr ptr);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern void MagneticFieldElementsSetIncl(IntPtr ptr, double newIncl);
 
         internal MagneticFieldElements(IntPtr ptr)

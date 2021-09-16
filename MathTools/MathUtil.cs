@@ -4,58 +4,58 @@ namespace AviationCalcUtilNet.MathTools
 {
     public static class MathUtil
     {
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MathUtilGetConvFactorKelvinC();
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MathUtilGetConvFactorMFt();
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MathUtilGetConvFactorHpaInhg();
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MathUtilGetConvFactorNmiM();
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MathUtilGetConvFactorMpersKts();
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MathUtilConvertDegreesToRadians(double degrees);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MathUtilConvertRadiansToDegrees(double radians);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MathUtilConvertHpaToInhg(double hPa);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MathUtilConvertInhgToHpa(double inHg);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MathUtilConvertMetersToFeet(double meters);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MathUtilConvertFeetToMeters(double feet);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MathUtilConvertMetersToNauticalMiles(double meters);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MathUtilConvertNauticalMilesToMeters(double NMi);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MathUtilConvertKelvinToCelsius(double kelvin);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MathUtilConvertCelsiusToKelvin(double celsius);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MathUtilConvertMpersToKts(double mpers);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MathUtilConvertKtsToMpers(double kts);
 
-        [DllImport("aviationcalc")]
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern long MathUtilFactorial(int n);
 
         public static double CONV_FACTOR_KELVIN_C => MathUtilGetConvFactorKelvinC();

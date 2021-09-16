@@ -8,10 +8,10 @@ namespace AviationCalcUtilNet.GeoTools.MagneticTools
     {
         internal IntPtr ptr;
         
-        [DllImport("aviationcalc")] private static extern IntPtr CreateMagneticResult(IntPtr model, IntPtr point, InteropDateStruct dStruct);
-        [DllImport("aviationcalc")] private static extern void DisposeMagneticResult(IntPtr ptr);
-        [DllImport("aviationcalc")] private static extern IntPtr MagneticResultGetMainFieldElements(IntPtr ptr);
-        [DllImport("aviationcalc")] private static extern IntPtr MagneticResultGetSecularFieldElements(IntPtr ptr);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CreateMagneticResult(IntPtr model, IntPtr point, InteropDateStruct dStruct);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void DisposeMagneticResult(IntPtr ptr);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr MagneticResultGetMainFieldElements(IntPtr ptr);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr MagneticResultGetSecularFieldElements(IntPtr ptr);
 
 
         internal MagneticResult(IntPtr ptr)
