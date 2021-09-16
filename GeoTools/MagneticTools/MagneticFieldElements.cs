@@ -11,7 +11,7 @@ namespace AviationCalcUtilNet.GeoTools.MagneticTools
         private static extern IntPtr CreateMagneticFieldElements();
 
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
-        private static extern void DisposeMagneticFieldElements(IntPtr ptr);
+        private static extern void DisposeMagneticElements(IntPtr ptr);
 
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double MagneticFieldElementsGetX(IntPtr ptr);
@@ -108,7 +108,7 @@ namespace AviationCalcUtilNet.GeoTools.MagneticTools
 
         ~MagneticFieldElements()
         {
-            DisposeMagneticFieldElements(ptr);
+            DisposeMagneticElements(ptr);
         }
         
     }
