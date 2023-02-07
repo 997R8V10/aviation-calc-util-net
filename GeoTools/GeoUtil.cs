@@ -54,47 +54,35 @@ namespace AviationCalcUtilNet.GeoTools
         private static extern void GeoUtilCalculateChordHeadingAndDistance(double startHeading, double degreesTurned, double radiusOfTurnNMi, bool isRightTurn, out double chordHeading, out double chordDistance);
 
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
-        private static extern double GeoUtilConvertIndicatedToAbsoluteAlt(double alt_ind_ft, double pres_set_hpa, double sfc_pres_hpa);
-
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
-        private static extern double GeoUtilConvertAbsoluteToIndicatedAlt(double alt_abs_ft, double pres_set_hpa, double sfc_pres_hpa);
-
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
-        private static extern double GeoUtilConvertIndicatedToPressureAlt(double alt_ind_ft, double pres_set_hpa);
-
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
-        private static extern double GeoUtilCalculateIsaTemp(double alt_pres_ft);
-
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
-        private static extern double GeoUtilConvertPressureToDensityAlt(double alt_pres_ft, double sat);
-
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
-        private static extern double GeoUtilConvertIasToTas(double ias, double pres_set_hpa, double alt_ind_ft, double sat);
-
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
-        private static extern double GeoUtilConvertTasToIas(double tas, double pres_set_hpa, double alt_ind_ft, double sat);
-
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
-        private static extern double GeoUtilConvertIasToTasFromDensityAltitude(double ias, double alt_dens_ft);
-
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
-        private static extern double GeoUtilConvertTasToIasDensityAltitude(double tas, double alt_dens_ft);
-
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilCalculateTurnAmount(double currentHeading, double desiredHeading);
 
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilGetEarthRadiusM();
-        
+
+
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
-        private static extern double GeoUtilGetStdPresHpa();
+        private static extern double GeoUtilConvertDegMinSecToDecimalDegs(int degrees, uint mins, double secs);
+
+
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
-        private static extern double GeoUtilGetStdTempC();
+        private static extern void GeoUtilConvertDecimalDegsToDegMinSec(double decimalDegs, out int degrees, out uint mins, out double secs);
+
+
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
-        private static extern double GeoUtilGetStdLapseRate();
+        private static extern void GeoUtilConvertNatsToDecimalDegs([MarshalAs(UnmanagedType.LPStr)] string natsLat, [MarshalAs(UnmanagedType.LPStr)] string natsLon, out double decLat, out double decLon);
+
+
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
-        private static extern double GeoUtilGetStdPresDrop();
-        
+        private static extern void GeoUtilConvertDecimalDegsToNats(double decimalLat, double decimalLon, [MarshalAs(UnmanagedType.LPStr)] out string natsLat, [MarshalAs(UnmanagedType.LPStr)] out string natsLon);
+
+
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void GeoUtilConvertVrcToDecimalDegs([MarshalAs(UnmanagedType.LPStr)] string vrcLat, [MarshalAs(UnmanagedType.LPStr)] string vrcLon, out double decLat, out double decLon);
+
+
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void GeoUtilConvertDecimalDegsToVrc(double decimalLat, double decimalLon, [MarshalAs(UnmanagedType.LPStr)] out string vrcLat, [MarshalAs(UnmanagedType.LPStr)] out string vrcLon);
+
         /// <summary>
         /// Calculates the direct course to intercept towards a waypoint.
         /// Returns -1 if direct course is not possible to achieve.
@@ -188,106 +176,197 @@ namespace AviationCalcUtilNet.GeoTools
             return GeoUtilNormalizeHeading(hdg);
         }
 
+        /// <summary>
+        /// Calculates maximum bank angle for a given rate of turn.
+        /// </summary>
+        /// <param name="groundSpeed">Ground speed (kts)</param>
+        /// <param name="bankLimit">Bank limit (degrees)</param>
+        /// <param name="turnRate">Rate of turn (degrees/s)</param>
+        /// <returns>Bank angle (degrees)</returns>
         public static double CalculateMaxBankAngle(double groundSpeed, double bankLimit, double turnRate)
         {
             return GeoUtilCalculateMaxBankAngle(groundSpeed, bankLimit, turnRate);
         }
 
+        /// <summary>
+        /// Calculates radius of turn at a certain bank angle.
+        /// </summary>
+        /// <param name="bankAngle">Bank angle (degrees)</param>
+        /// <param name="groundSpeed">Ground speed (kts)</param>
+        /// <returns>Radius of turn (nautical miles)</returns>
         public static double CalculateRadiusOfTurn(double bankAngle, double groundSpeed)
         {
             return GeoUtilCalculateRadiusOfTurn(bankAngle, groundSpeed);
         }
 
+        /// <summary>
+        /// Calculates bank angle at a certain radius of turn.
+        /// </summary>
+        /// <param name="radiusOfTurn">Radius of turn (nautical miles)</param>
+        /// <param name="groundSpeed">Ground speed (kts)</param>
+        /// <returns>Bank angle (degrees)</returns>
         public static double CalculateBankAngle(double radiusOfTurn, double groundSpeed)
         {
             return GeoUtilCalculateBankAngle(radiusOfTurn, groundSpeed);
         }
 
+        /// <summary>
+        /// Calculates the radius of turn required for a constant radius turn with wind.
+        /// </summary>
+        /// <param name="startBearing">Start bearing (degrees)</param>
+        /// <param name="turnAmount">Amount to turn (degrees)</param>
+        /// <param name="windBearing">Bearing that wind is coming from (degrees)</param>
+        /// <param name="windSpeed">Wind speed (kts)</param>
+        /// <param name="tas">True air speed (kts)</param>
+        /// <returns>Radius of turn (nautical miles)</returns>
         public static double CalculateConstantRadiusTurn(double startBearing, double turnAmount, double windBearing, double windSpeed, double tas)
         {
             return GeoUtilCalculateConstantRadiusTurn(startBearing, turnAmount, windBearing, windSpeed, tas);
         }
 
+        /// <summary>
+        /// Gets the headwind/tailwind component.
+        /// </summary>
+        /// <param name="windSpeed">Wind speed (kts)</param>
+        /// <param name="windBearing">Bearing that wind is coming from (degrees)</param>
+        /// <param name="bearing">Bearing that aircraft is headed in (degrees)</param>
+        /// <returns>Headwind Component (negative for tailwind) (kts)</returns>
         public static double HeadwindComponent(double windSpeed, double windBearing, double bearing)
         {
             return GeoUtilGetHeadwindComponent(windSpeed, windBearing, bearing);
         }
 
+        /// <summary>
+        /// Calculate distance travelled in nautical miles.
+        /// </summary>
+        /// <param name="groundSpeedKts">Ground speed (kts)</param>
+        /// <param name="timeMs">Time (ms)</param>
+        /// <returns>Distance travelled (nautical miles)</returns>
         public static double CalculateDistanceTravelledNMi(double groundSpeedKts, double timeMs)
         {
             return GeoUtilCalculateDistanceTravelledNMi(groundSpeedKts, timeMs);
         }
 
+        /// <summary>
+        /// Calculate amount of degrees turned.
+        /// </summary>
+        /// <param name="distTravelledNMi">Distance travelled (nautical miles)</param>
+        /// <param name="radiusOfTurnNMi">Radius of turn (nautical miles)</param>
+        /// <returns>Degrees turned (degrees)</returns>
         public static double CalculateDegreesTurned(double distTravelledNMi, double radiusOfTurnNMi)
         {
             return GeoUtilCalculateDegreesTurned(distTravelledNMi, radiusOfTurnNMi);
         }
 
+        /// <summary>
+        /// Calculate roll out heading.
+        /// </summary>
+        /// <param name="startHeading">Start heading (degrees)</param>
+        /// <param name="degreesTurned">Amount of turn (degrees)</param>
+        /// <param name="isRightTurn">Is the turn to the right?</param>
+        /// <returns>Roll out heading (degrees)</returns>
         public static double CalculateEndHeading(double startHeading, double degreesTurned, bool isRightTurn)
         {
             return GeoUtilCalculateEndHeading(startHeading, degreesTurned, isRightTurn);
         }
-        
+
+        /// <summary>
+        /// Calculate direct heading and distance along a circle (chord line)
+        /// </summary>
+        /// <param name="startHeading">Start heading (degrees)</param>
+        /// <param name="degreesTurned">Amount of turn (degrees)</param>
+        /// <param name="radiusOfTurnNMi">Radius of turn (nautical miles)</param>
+        /// <param name="isRightTurn">Is the turn to the right?</param>
+        /// <returns>Chord heading (degrees), Chord distance (nautical miles)</returns>
         public static Tuple<double, double> CalculateChordHeadingAndDistance(double startHeading, double degreesTurned, double radiusOfTurnNMi, bool isRightTurn)
         {
             GeoUtilCalculateChordHeadingAndDistance(startHeading, degreesTurned, radiusOfTurnNMi, isRightTurn, out var chordHeading, out var chordDistance);
             return new Tuple<double, double>(chordHeading, chordDistance);
         }
 
-        public static double ConvertIndicatedToAbsoluteAlt(double alt_ind_ft, double pres_set_hpa, double sfc_pres_hpa)
-        {
-            return GeoUtilConvertIndicatedToAbsoluteAlt(alt_ind_ft, pres_set_hpa, sfc_pres_hpa);
-        }
-
-        public static double ConvertAbsoluteToIndicatedAlt(double alt_abs_ft, double pres_set_hpa, double sfc_pres_hpa)
-        {
-            return GeoUtilConvertAbsoluteToIndicatedAlt(alt_abs_ft, pres_set_hpa, sfc_pres_hpa);
-        }
-
-        public static double ConvertIndicatedToPressureAlt(double alt_ind_ft, double pres_set_hpa)
-        {
-            return GeoUtilConvertIndicatedToPressureAlt(alt_ind_ft, pres_set_hpa);
-        }
-
-        public static double CalculateIsaTemp(double alt_pres_ft)
-        {
-            return GeoUtilCalculateIsaTemp(alt_pres_ft);
-        }
-
-        public static double ConvertPressureToDensityAlt(double alt_pres_ft, double sat)
-        {
-            return GeoUtilConvertPressureToDensityAlt(alt_pres_ft, sat);
-        }
-
-        public static double ConvertIasToTas(double ias, double pres_set_hpa, double alt_ind_ft, double sat)
-        {
-            return GeoUtilConvertIasToTas(ias, pres_set_hpa, alt_ind_ft, sat);
-        }
-
-        public static double ConvertTasToIas(double tas, double pres_set_hpa, double alt_ind_ft, double sat)
-        {
-            return GeoUtilConvertTasToIas(tas, pres_set_hpa, alt_ind_ft, sat);
-        }
-
-        public static double ConvertIasToTas(double ias, double alt_dens_ft)
-        {
-            return GeoUtilConvertIasToTasFromDensityAltitude(ias, alt_dens_ft);
-        }
-
-        public static double ConvertTasToIas(double tas, double alt_dens_ft)
-        {
-            return GeoUtilConvertTasToIasDensityAltitude(tas, alt_dens_ft);
-        }
-
+        /// <summary>
+        /// Calculate amount of turn between two headings (0-360)
+        /// </summary>
+        /// <param name="currentHeading">Current heading (degrees)</param>
+        /// <param name="desiredHeading">Desired heading (degrees)</param>
+        /// <returns>Amount of turn (degrees). Negative is left.</returns>
         public static double CalculateTurnAmount(double currentHeading, double desiredHeading)
         {
             return GeoUtilCalculateTurnAmount(currentHeading, desiredHeading);
         }
         
         public static double EARTH_RADIUS_M => GeoUtilGetEarthRadiusM();
-        public static double STD_PRES_HPA => GeoUtilGetStdPresHpa();
-        public static double STD_TEMP_C => GeoUtilGetStdTempC();
-        public static double STD_LAPSE_RATE => GeoUtilGetStdLapseRate();
-        public static double STD_PRES_DROP => GeoUtilGetStdPresDrop();
+
+        /// <summary>
+        /// Convert from degrees.minutes.seconds to decimal degrees.
+        /// </summary>
+        /// <param name="degrees">Degrees (signed integer)</param>
+        /// <param name="mins">Minutes (unsigned integer)</param>
+        /// <param name="secs">Seconds (double)</param>
+        /// <returns>Decimal degrees</returns>
+        public static double ConvertDegMinSecToDecimalDegs(int degrees, uint mins, double secs)
+        {
+            return GeoUtilConvertDegMinSecToDecimalDegs(degrees, mins, secs);
+        }
+
+        /// <summary>
+        /// Convert from decimal degrees to degrees.minutes.seconds.
+        /// </summary>
+        /// <param name="decimalDegs">Decimal degrees</param>
+        /// <param name="degrees">Output degrees (signed integer)</param>
+        /// <param name="mins">Output minutes (unsigned integer)</param>
+        /// <param name="secs">Output seconds (double)</param>
+        public static void ConvertDecimalDegsToDegMinSec(double decimalDegs, out int degrees, out uint mins, out double secs)
+        {
+            GeoUtilConvertDecimalDegsToDegMinSec(decimalDegs, out degrees, out mins, out secs);
+        }
+
+        /// <summary>
+        /// Convert from NATS style coordinates to decimal degrees.
+        /// </summary>
+        /// <param name="natsLat">NATS style latitude</param>
+        /// <param name="natsLon">NATS style longitude</param>
+        /// <param name="decimalLat">Decimal latitude out variable</param>
+        /// <param name="decimalLon">Decimal longitude out variable</param>
+        public static void ConvertNatsToDecimalDegs(string natsLat, string natsLon, out double decimalLat, out double decimalLon)
+        {
+            GeoUtilConvertNatsToDecimalDegs(natsLat, natsLon, out decimalLat, out decimalLon);
+        }
+
+        /// <summary>
+        /// Convert from decimal degrees to NATS style coordinates.
+        /// </summary>
+        /// <param name="decimalLat">Decimal latitude</param>
+        /// <param name="decimalLon">Decimal longitude</param>
+        /// <param name="natsLat">Out NATS latitude</param>
+        /// <param name="natsLon">Out NATS longitude</param>
+        public static void ConvertDecimalDegsToNats(double decimalLat, double decimalLon, out string natsLat, out string natsLon)
+        {
+            GeoUtilConvertDecimalDegsToNats(decimalLat, decimalLon, out natsLat, out natsLon);
+        }
+
+        /// <summary>
+        /// Convert from VRC/Euroscope style coordinates to decimal degrees.
+        /// </summary>
+        /// <param name="vrcLat">VRC/Euroscope style latitude</param>
+        /// <param name="vrcLon">VRC/Euroscope style longitude</param>
+        /// <param name="decimalLat">Out decimal latitude</param>
+        /// <param name="decimalLon">Out decimal longitude</param>
+        public static void ConvertVrcToDecimalDegs(string vrcLat, string vrcLon, out double decimalLat, out double decimalLon)
+        {
+            GeoUtilConvertVrcToDecimalDegs(vrcLat, vrcLon, out decimalLat, out decimalLon);
+        }
+
+        /// <summary>
+        /// Convert from decimal degrees to VRC/Euroscope style coordinates.
+        /// </summary>
+        /// <param name="decimalLat">Decimal latitude</param>
+        /// <param name="decimalLon">Decimal longitude</param>
+        /// <param name="vrcLat">Out VRC/Euroscope style latitude</param>
+        /// <param name="vrcLon">Out VRC/Euroscope style longitude</param>
+        public static void ConvertDecimalDegsToVrc(double decimalLat, double decimalLon, out string vrcLat, out string vrcLon)
+        {
+            GeoUtilConvertDecimalDegsToVrc(decimalLat, decimalLon, out vrcLat, out vrcLon);
+        }
     }
 }

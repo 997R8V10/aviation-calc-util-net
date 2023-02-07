@@ -16,6 +16,7 @@ namespace AviationCalcUtilNet.GeoTools
 		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilGetConst_ISA_STD_DENS();
 		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilGetConst_ISA_STD_LAPSE_RATE();
 		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilGetConst_EARTH_G();
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilGetConst_ISA_STD_PRES_DROP_ft_PER_hPa();
 		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilCalculateDryAirDensity(double p, double T);
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilCalculateImpactPressure1(double cas);
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilCalculateImpactPressure2(double M, double p);
@@ -30,6 +31,10 @@ namespace AviationCalcUtilNet.GeoTools
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilCalculateSpeedOfSoundDryAir(double T);
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilConvertIasToTas(double ias_kts, double refPress_hPa, double alt_ft, double refAlt_ft, double refTemp_K, out double mach);
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilConvertTasToIas(double tas_kts, double refPress_hPa, double alt_ft, double refAlt_ft, double refTemp_K, out double mach);
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilConvertIndicatedToAbsoluteAlt(double alt_ind_ft, double pres_set_hpa, double sfc_pres_hpa);
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilConvertAbsoluteToIndicatedAlt(double alt_abs_ft, double pres_set_hpa, double sfc_pres_hpa);
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilConvertIndicatedToPressureAlt(double alt_ind_ft, double pres_set_hpa);
+		[DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double AtmosUtilCalculateIsaTemp(double alt_pres_ft);
 
 		/// <summary>
 		/// Specific Gas Constant for dry air (J/(kg*K))
@@ -75,6 +80,11 @@ namespace AviationCalcUtilNet.GeoTools
 		/// Earth Surface Gravitational Acceleration (m/s^2)
 		/// </summary>
 		public static double EARTH_G => AtmosUtilGetConst_EARTH_G();
+
+		/// <summary>
+		/// Conversion Factor between hPa and ft of altitude.
+		/// </summary>
+		public static double ISA_STD_PRES_DROP_ft_PER_hPa => AtmosUtilGetConst_ISA_STD_PRES_DROP_ft_PER_hPa();
 
 		/// <summary>
 		/// Calculates the density of dry air at a given temperature and pressure.
@@ -237,5 +247,51 @@ namespace AviationCalcUtilNet.GeoTools
 		{
 			return AtmosUtilConvertTasToIas(tas_kts, refPress_hPa, alt_ft, refAlt_ft, refTemp_K, out mach);
 		}
+
+		/// <summary>
+		/// Converts Indicated Altitude to Absolute Altitude
+		/// </summary>
+		/// <param name="alt_ind_ft">Indicated altitude (ft)</param>
+		/// <param name="pres_set_hpa">Pressure setting (hPa)</param>
+		/// <param name="sfc_pres_hpa">Surface pressure (hPa)</param>
+		/// <returns>Absolute altitude (ft)</returns>
+		public static double ConvertIndicatedToAbsoluteAlt(double alt_ind_ft, double pres_set_hpa, double sfc_pres_hpa)
+        {
+			return AtmosUtilConvertIndicatedToAbsoluteAlt(alt_ind_ft, pres_set_hpa, sfc_pres_hpa);
+        }
+
+		/// <summary>
+		/// Converts Absolute Altitude to Indicated Altitude
+		/// </summary>
+		/// <param name="alt_abs_ft">Absolute altitude (ft)</param>
+		/// <param name="pres_set_hpa">Pressure setting (hPa)</param>
+		/// <param name="sfc_pres_hpa">Surface pressure (hPa)</param>
+		/// <returns>Indicated altitude (ft)</returns>
+		public static double ConvertAbsoluteToIndicatedAlt(double alt_abs_ft, double pres_set_hpa, double sfc_pres_hpa)
+        {
+			return AtmosUtilConvertAbsoluteToIndicatedAlt(alt_abs_ft, pres_set_hpa, sfc_pres_hpa);
+		}
+
+		/// <summary>
+		/// Converts Indicated Altitude to Pressure Altitude
+		/// </summary>
+		/// <param name="alt_ind_ft">Indicated altitude (ft)</param>
+		/// <param name="pres_set_hpa">Pressure setting (hPa)</param>
+		/// <returns>Pressure altitude (ft)</returns>
+		public static double ConvertIndicatedToPressureAlt(double alt_ind_ft, double pres_set_hpa)
+        {
+			return AtmosUtilConvertIndicatedToPressureAlt(alt_ind_ft, pres_set_hpa);
+
+		}
+
+		/// <summary>
+		/// Calculate ISA (International Standard Atmosphere) Temperature at a Pressure Altitude.
+		/// </summary>
+		/// <param name="alt_pres_ft">Pressure altitude (ft)</param>
+		/// <returns>ISA Temp (C)</returns>
+		public static double CalculateIsaTemp(double alt_pres_ft)
+        {
+			return AtmosUtilCalculateIsaTemp(alt_pres_ft);
+        }
 	}
 }
