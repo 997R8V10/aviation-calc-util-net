@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata minClientVersion="2.5">
+    <id>${NUGET_PACKAGE_NAME}</id>
+    <version>${CMAKE_PROJECT_VERSION}</version>
+    <authors>${Authors}</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <description>${CMAKE_PROJECT_DESCRIPTION}</description>
+    <tags>${PackageTags}</tags>
+    <repository type="git" url="${RepositoryUrl}" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="PShivaraman.AviationCalcUtil" version="1.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <references>
+      <group targetFramework=".NETStandard2.0">
+        <reference file="AviationCalcUtilNet.dll" />
+        <reference file="AviationCalcUtilNet.pdb" />
+      </group>
+    </references>
+  </metadata>
+
+  <files>
+    <file src="runtimes\**" target="runtimes" />
+    <file src="ref\**" target="ref" />
+    <file src="lib\**" target="lib" />
+  </files>
+</package>

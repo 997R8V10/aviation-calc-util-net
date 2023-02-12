@@ -1,35 +1,75 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
-    <FileVersion>1.0.6</FileVersion>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
     <Platforms>x86;x64</Platforms>
-    <Version>1.0.0</Version>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <PlatformTarget>x64</PlatformTarget>
+    <Version>1.0.0.1</Version>
+    <Authors>Prithvi Shivaraman</Authors>
+    <Description>.NET Wrapper for Aviation Calc Util Native Library</Description>
+    <Summary>.NET Wrapper for Aviation Calc Util Native Library</Summary>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageId>PShivaraman.AviationCalcUtilNet</PackageId>
+    <PackageTags>aviationcalc aviationcalcutilnet</PackageTags>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <RepositoryUrl>https://github.com/997R8V10/aviation-calc-util-net.git</RepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="AviationCalcUtilNetTests\**" />
+    <Compile Remove="build\**" />
+    <Compile Remove="out\**" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Remove="AviationCalcUtilNetTests\**" />
+    <EmbeddedResource Remove="build\**" />
+    <EmbeddedResource Remove="out\**" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="AviationCalcUtilNetTests\**" />
+    <None Remove="build\**" />
+    <None Remove="out\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="README.md" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <PackageReference Include="PShivaraman.AviationCalcUtil" Version="1.0.0" />
   </ItemGroup>
+  
+  <Import Project="TemplateFile.xml" />
+
+  <Target Name="AfterBuildStep" AfterTargets="Build">
+    <ItemGroup>
+            <Tokens Include="NUGET_PACKAGE_NAME">
+                <ReplacementValue>$(PackageId)</ReplacementValue>
+            </Tokens>
+            <Tokens Include="CMAKE_PROJECT_VERSION">
+                <ReplacementValue>$(AssemblyVersion)</ReplacementValue>
+            </Tokens>
+            <Tokens Include="Authors">
+                <ReplacementValue>$(Authors)</ReplacementValue>
+            </Tokens>
+            <Tokens Include="CMAKE_PROJECT_DESCRIPTION">
+                <ReplacementValue>$(Description)</ReplacementValue>
+            </Tokens>
+            <Tokens Include="PackageTags">
+                <ReplacementValue>$(PackageTags)</ReplacementValue>
+            </Tokens>
+            <Tokens Include="RepositoryUrl">
+                <ReplacementValue>$(RepositoryUrl)</ReplacementValue>
+            </Tokens>
+        </ItemGroup>
+        <TemplateFile Template="$(ProjectDir)nuget/pack-nuget.bat" OutputFileName="$(OutputPath)\pack-nuget.bat" Tokens="@(Tokens)" />
+        <TemplateFile Template="$(ProjectDir)nuget/template.nuspec" OutputFileName="$(OutputPath)\$(PackageId).nuspec" Tokens="@(Tokens)" />
+  </Target>
 
 </Project>
