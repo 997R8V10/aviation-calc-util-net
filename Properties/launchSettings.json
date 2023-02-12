@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AviationCalcUtilNet": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
