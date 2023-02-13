@@ -6,19 +6,23 @@ if %1.==. (
 	set nugetfeedpath="%1"
 )
 
+set runtimes="win-x86" "win-x64" "linux-x64" "linux-arm" "linux-arm64" "osx-x64"
+
 ECHO \--------------------------------------------------------------\
 ECHO \                       Cleaning Folders                       \
 ECHO \--------------------------------------------------------------\
 ECHO
 
-powershell -Command "(gc nuget\AviationCalcUtilNetNuget.csproj.in) -replace '\^RuntimeIdentifier\^', 'win-x86' | Out-File -encoding ASCII AviationCalcUtilNetNuget-win-x86.csproj"
-powershell -Command "(gc nuget\AviationCalcUtilNetNuget.csproj.in) -replace '\^RuntimeIdentifier\^', 'win-x64' | Out-File -encoding ASCII AviationCalcUtilNetNuget-win-x64.csproj"
+(for %%a in (%runtimes%) do ( 
+   powershell -Command "(gc nuget\AviationCalcUtilNetNuget.csproj.in) -replace '\^RuntimeIdentifier\^', '%%a' | Out-File -encoding ASCII AviationCalcUtilNetNuget-%%a.csproj"
+))
 
 ECHO Cleaning NuGet folder
 rmdir /S /Q out\nuget
 ECHO Cleaning Build folders
-dotnet clean AviationCalcUtilNetNuget-win-x86.csproj -r win-x86 -c Release
-dotnet clean AviationCalcUtilNetNuget-win-x64.csproj -r win-x64 -c Release
+(for %%a in (%runtimes%) do ( 
+	dotnet clean AviationCalcUtilNetNuget-%%a.csproj -r %%a -c Release
+))
 ECHO
 
 ECHO \--------------------------------------------------------------\
@@ -28,18 +32,20 @@ ECHO
 
 ECHO Building and Packing packages
 mkdir out\nuget
-dotnet pack AviationCalcUtilNetNuget-win-x86.csproj --runtime win-x86 -c Release -o out\nuget
-dotnet pack AviationCalcUtilNetNuget-win-x64.csproj --runtime win-x64 -c Release -o out\nuget
-del AviationCalcUtilNetNuget-win-x86.csproj
-del AviationCalcUtilNetNuget-win-x64.csproj
+(for %%a in (%runtimes%) do ( 
+	dotnet pack AviationCalcUtilNetNuget-%%a.csproj --runtime %%a -c Release -o out\nuget --include-symbols
+	del AviationCalcUtilNetNuget-%%a.csproj
+))
+
 cd out\nuget
 
 ECHO Fetching NuGet executable
 powershell -Command "Invoke-WebRequest https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile nuget.exe"
 
 ECHO Deleting existing package
-nuget.exe delete PShivaraman.AviationCalcUtilNet.win-x86 1.0.2 -Source %nugetfeedpath% -NonInteractive
-nuget.exe delete PShivaraman.AviationCalcUtilNet.win-x64 1.0.2 -Source %nugetfeedpath% -NonInteractive
+(for %%a in (%runtimes%) do ( 
+	nuget.exe delete PShivaraman.AviationCalcUtilNet.%%a 1.0.3 -Source %nugetfeedpath% -NonInteractive
+))
 ECHO Installing new package
 nuget.exe init . %nugetfeedpath%
 ECHO
