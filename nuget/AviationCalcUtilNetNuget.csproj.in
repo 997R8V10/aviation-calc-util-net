@@ -3,17 +3,18 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>AviationCalcUtilNet</AssemblyName>
-    <AssemblyVersion>1.0.3</AssemblyVersion>
-    <FileVersion>1.0.3</FileVersion>
+    <AssemblyVersion>1.0.4</AssemblyVersion>
+    <FileVersion>1.0.4</FileVersion>
     <Platforms>x86;x64;arm64</Platforms>
-	  <RuntimeIdentifiers>win-x86;win-x64;win-arm64;linux-x64;linux-arm;linux-arm64;osx-x64</RuntimeIdentifiers>
-    <Version>1.0.3</Version>
+	  <RuntimeIdentifiers>win-x86;win-x64;linux-x64;linux-arm;linux-arm64;osx-x64</RuntimeIdentifiers>
+    <Version>1.0.4</Version>
     <Authors>Prithvi Shivaraman</Authors>
     <Description>.NET Wrapper for Aviation Calc Util Native Library</Description>
     <Summary>.NET Wrapper for Aviation Calc Util Native Library</Summary>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageId>PShivaraman.AviationCalcUtilNet.^RuntimeIdentifier^</PackageId>
     <PackageTags>aviationcalc aviationcalcutilnet</PackageTags>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryUrl>https://github.com/997R8V10/aviation-calc-util-net.git</RepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
@@ -40,11 +41,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="README.md" Pack="true" PackagePath="README.md" />
+    <None Include="README.md" Pack="true" PackagePath="" />
+    <None Include="LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="PShivaraman.AviationCalcUtil.^RuntimeIdentifier^" Version="1.0.3" />
+    <PackageReference Include="PShivaraman.AviationCalcUtil.^RuntimeIdentifier^" Version="1.0.4" />
   </ItemGroup>
 
 </Project>

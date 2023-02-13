@@ -44,7 +44,7 @@ powershell -Command "Invoke-WebRequest https://dist.nuget.org/win-x86-commandlin
 
 ECHO Deleting existing package
 (for %%a in (%runtimes%) do ( 
-	nuget.exe delete PShivaraman.AviationCalcUtilNet.%%a 1.0.3 -Source %nugetfeedpath% -NonInteractive
+	nuget.exe delete PShivaraman.AviationCalcUtilNet.%%a 1.0.4 -Source %nugetfeedpath% -NonInteractive
 ))
 ECHO Installing new package
 nuget.exe init . %nugetfeedpath%
