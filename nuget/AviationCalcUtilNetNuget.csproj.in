@@ -11,7 +11,7 @@
     <Description>.NET Wrapper for Aviation Calc Util Native Library</Description>
     <Summary>.NET Wrapper for Aviation Calc Util Native Library</Summary>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageId>PShivaraman.AviationCalcUtilNet.win-$(Platform)</PackageId>
+    <PackageId>PShivaraman.AviationCalcUtilNet.^RuntimeIdentifier^</PackageId>
     <PackageTags>aviationcalc aviationcalcutilnet</PackageTags>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryUrl>https://github.com/997R8V10/aviation-calc-util-net.git</RepositoryUrl>
@@ -43,9 +43,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="PShivaraman.AviationCalcUtil.win-$(Platform)" Version="1.0.2" Condition="$([MSBuild]::IsOSPlatform('Windows'))"/>
-    <PackageReference Include="PShivaraman.AviationCalcUtil.osx-$(Platform)" Version="1.0.2" Condition="$([MSBuild]::IsOSPlatform('OSX'))"/>
-    <PackageReference Include="PShivaraman.AviationCalcUtil.linux-$(Platform)" Version="1.0.2" Condition="$([MSBuild]::IsOSPlatform('Linux'))"/>
+    <PackageReference Include="PShivaraman.AviationCalcUtil.^RuntimeIdentifier^" Version="1.0.2" />
   </ItemGroup>
 
 </Project>

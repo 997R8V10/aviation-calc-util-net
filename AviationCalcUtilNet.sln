@@ -1,8 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AviationCalcUtilNet", "AviationCalcUtilNet.csproj", "{19A5D9A6-2064-4B50-8EAF-CD50DCC966CF}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31613.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AviationCalcUtilNet", "AviationCalcUtilNet.csproj", "{19A5D9A6-2064-4B50-8EAF-CD50DCC966CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AviationCalcUtilNetTests", "AviationCalcUtilNetTests\AviationCalcUtilNetTests.csproj", "{3193D910-BD7B-41B6-8A41-9C46CCC6B1ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AviationCalcUtilNetTests", "AviationCalcUtilNetTests\AviationCalcUtilNetTests.csproj", "{3193D910-BD7B-41B6-8A41-9C46CCC6B1ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,5 +31,11 @@ Global
 		{3193D910-BD7B-41B6-8A41-9C46CCC6B1ED}.Release|x64.Build.0 = Release|x64
 		{3193D910-BD7B-41B6-8A41-9C46CCC6B1ED}.Release|x86.ActiveCfg = Release|x86
 		{3193D910-BD7B-41B6-8A41-9C46CCC6B1ED}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5AF7924F-FAE3-4327-B58B-E035756C1714}
 	EndGlobalSection
 EndGlobal
