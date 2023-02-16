@@ -39,7 +39,7 @@ jobs:
           #  arch: arm
           #- os: macos-latest
           #  arch: arm64
-
+    runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
