@@ -5,14 +5,41 @@ name: .NET
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "dev" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "dev" ]
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    build:
+    # Arch Matrix
+    strategy:
+      fail-fast: false
+      matrix:
+        #arch: [x64, x86, arm, arm64]
+        arch: [x64, x86]
+        os: [macos-latest, windows-latest, ubuntu-latest]
+        configuration: [Debug, Release]
+        include:
+          - os: macos-latest
+            short-os: osx
+          - os: windows-latest
+            short-os: win
+          - os: ubuntu-latest
+            short-os: linux
+        exclude:
+          #- os: windows-latest
+          #  arch: arm
+          #- os: windows-latest
+          #  arch: arm64
+          - os: ubuntu-latest
+            arch: x86
+          - os: macos-latest
+            arch: x86
+          #- os: macos-latest
+          #  arch: arm
+          #- os: macos-latest
+          #  arch: arm64
 
     steps:
     - uses: actions/checkout@v3
@@ -20,9 +47,7 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 3.1.x
-    - name: Restore dependencies
-      run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build -c ${{ matrix.configuration }} --arch ${{ matrix.arch }}
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal -c ${{ matrix.configuration }} --arch ${{ matrix.arch }}
