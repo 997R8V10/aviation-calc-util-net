@@ -50,10 +50,10 @@ jobs:
       with:
         nuget-version: 'latest'
     - name: Build and Test
-      run: dotnet test --verbosity normal -c ${{ matrix.configuration }} -r ${{ matrix.short-os }}-${{ matrix.arch }}
+      run: dotnet test --verbosity normal -c ${{ matrix.configuration }} -r ${{ matrix.short-os }}-${{ matrix.arch }} -p:PlatformTarget=${{ matrix.arch }}
     - name: Pack NuGet Package
       if: ${{ matrix.configuration == 'Release' }}
-      run: dotnet pack AviationCalcUtilNet.csproj --runtime ${{ matrix.short-os }}-${{ matrix.arch }} -c ${{ matrix.configuration }} -o out\nuget --include-symbols
+      run: dotnet pack AviationCalcUtilNet.csproj --runtime ${{ matrix.short-os }}-${{ matrix.arch }} -c ${{ matrix.configuration }} -o out\nuget --include-symbols -p:RuntimeIdentifier=${{ matrix.short-os }}-${{ matrix.arch }}
     - name: Publish NuGet Package
       if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/heads/master')}}
       run: |
