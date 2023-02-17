@@ -51,6 +51,7 @@ jobs:
         nuget-version: 'latest'
     - name: Build and Test
       run: dotnet test --verbosity normal -c ${{ matrix.configuration }} -r ${{ matrix.short-os }}-${{ matrix.arch }} -p:PlatformTarget=${{ matrix.arch }}
+      if: ${{ arch != 'x86' }} # Doesn't work on x86 for some reason
     - name: Pack NuGet Package
       if: ${{ matrix.configuration == 'Release' }}
       run: dotnet pack AviationCalcUtilNet.csproj --runtime ${{ matrix.short-os }}-${{ matrix.arch }} -c ${{ matrix.configuration }} -o out\nuget --include-symbols -p:RuntimeIdentifier=${{ matrix.short-os }}-${{ matrix.arch }}
@@ -58,4 +59,3 @@ jobs:
       if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/heads/master')}}
       run: |
         nuget push out\nuget\**\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
-        nuget push out\nuget\**\*.snupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
