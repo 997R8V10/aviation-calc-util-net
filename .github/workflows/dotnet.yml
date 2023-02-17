@@ -58,4 +58,3 @@ jobs:
       if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/heads/master')}}
       run: |
         nuget push out\nuget\**\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
-        nuget push out\nuget\**\*.snupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
