@@ -56,6 +56,6 @@ jobs:
       if: ${{ matrix.configuration == 'Release' }}
       run: dotnet pack AviationCalcUtilNet.csproj --runtime ${{ matrix.short-os }}-${{ matrix.arch }} -c ${{ matrix.configuration }} -o out\nuget --include-symbols -p:RuntimeIdentifier=${{ matrix.short-os }}-${{ matrix.arch }}
     - name: Publish NuGet Package
-      if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/heads/master')}}
+      if: ${{ matrix.configuration == 'Release' && github.event_name == 'push' && startsWith(github.ref, 'refs/heads/master')}}
       run: |
         nuget push out\nuget\**\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
