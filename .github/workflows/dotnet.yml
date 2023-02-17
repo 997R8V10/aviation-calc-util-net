@@ -45,8 +45,21 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 3.1.x
-    - name: Build
-      run: dotnet build -c ${{ matrix.configuration }} --arch ${{ matrix.arch }}
+        dotnet-version: 6.x.x
+    - uses: nuget/setup-nuget@v1
+      with:
+        nuget-version: 'latest'
+    - name: Build Main
+      run: dotnet build AviationCalcUtilNet.csproj -c ${{ matrix.configuration }} -r ${{ matrix.short-os }}-${{ matrix.arch }}
+    - name: Build Test
+      run: dotnet build AviationCalcUtilNetTests/AviationCalcUtilNetTests.csproj -c ${{ matrix.configuration }} -r ${{ matrix.short-os }}-${{ matrix.arch }}
     - name: Test
-      run: dotnet test --no-build --verbosity normal -c ${{ matrix.configuration }} --arch ${{ matrix.arch }}
+      run: dotnet test --no-build --verbosity normal -c ${{ matrix.configuration }} -r ${{ matrix.short-os }}-${{ matrix.arch }}
+    - name: Pack NuGet Package
+      if: ${{ matrix.configuration == 'Release' }}
+      run: dotnet pack AviationCalcUtilNet.csproj --no-build -c ${{ matrix.configuration }} -o out\nuget --include-symbols
+    - name: Publish NuGet Package
+      if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/heads/master')}}
+      run: |
+        nuget push out\nuget\**\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
+        nuget push out\nuget\**\*.snupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}

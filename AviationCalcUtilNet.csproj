@@ -2,16 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyVersion>1.0.4</AssemblyVersion>
-    <FileVersion>1.0.4</FileVersion>
+    <AssemblyVersion>1.0.7</AssemblyVersion>
+    <FileVersion>1.0.7</FileVersion>
     <Platforms>x86;x64;arm64</Platforms>
 	<RuntimeIdentifiers>win-x86;win-x64;linux-x64;linux-arm;linux-arm64;osx-x64</RuntimeIdentifiers>
-    <Version>1.0.4</Version>
+    <Version>1.0.7</Version>
     <Authors>Prithvi Shivaraman</Authors>
     <Description>.NET Wrapper for Aviation Calc Util Native Library</Description>
     <Summary>.NET Wrapper for Aviation Calc Util Native Library</Summary>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageId>PShivaraman.AviationCalcUtilNet.win-$(Platform)</PackageId>
+	<RunId Condition="'$(RuntimeIdentifier)' == '' And $([MSBuild]::IsOSPlatform('Windows'))">win-$(Platform)</RunId>
+	<RunId Condition="'$(RuntimeIdentifier)' == '' And $([MSBuild]::IsOSPlatform('Linux'))">linux-$(Platform)</RunId>
+	<RunId Condition="'$(RuntimeIdentifier)' == '' And $([MSBuild]::IsOSPlatform('OSX'))">osx-$(Platform)</RunId>
+	<RunId Condition="'$(RunId)' == ''">$(RuntimeIdentifier)</RunId>
+    <PackageId>PShivaraman.AviationCalcUtilNet.$(RunId)</PackageId>
     <PackageTags>aviationcalc aviationcalcutilnet</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -46,9 +50,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="PShivaraman.AviationCalcUtil.win-$(Platform)" Version="1.0.4" Condition="$([MSBuild]::IsOSPlatform('Windows'))" />
-    <PackageReference Include="PShivaraman.AviationCalcUtil.osx-$(Platform)" Version="1.0.4" Condition="$([MSBuild]::IsOSPlatform('OSX'))" />
-    <PackageReference Include="PShivaraman.AviationCalcUtil.linux-$(Platform)" Version="1.0.4" Condition="$([MSBuild]::IsOSPlatform('Linux'))" />
+    <PackageReference Include="PShivaraman.AviationCalcUtil.$(RunId)" Version="1.0.7" />
   </ItemGroup>
 
 </Project>
