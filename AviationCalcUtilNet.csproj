@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyVersion>1.0.9</AssemblyVersion>
-    <FileVersion>1.0.9</FileVersion>
+    <AssemblyVersion>1.0.11</AssemblyVersion>
+    <FileVersion>1.0.11</FileVersion>
     <Platforms>x86;x64;arm64</Platforms>
 	<RuntimeIdentifiers>win-x86;win-x64;linux-x64;linux-arm;linux-arm64;osx-x64</RuntimeIdentifiers>
-    <Version>1.0.9</Version>
+    <Version>1.0.11</Version>
     <Authors>Prithvi Shivaraman</Authors>
     <Description>.NET Wrapper for Aviation Calc Util Native Library</Description>
     <Summary>.NET Wrapper for Aviation Calc Util Native Library</Summary>
@@ -50,7 +50,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="PShivaraman.AviationCalcUtil.$(RunId)" Version="1.0.9" />
+    <PackageReference Include="PShivaraman.AviationCalcUtil.$(RunId)" Version="1.0.11" />
   </ItemGroup>
 
 </Project>
