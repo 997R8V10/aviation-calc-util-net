@@ -51,10 +51,8 @@ jobs:
         nuget-version: 'latest'
     - name: Build Main
       run: dotnet build AviationCalcUtilNet.csproj -c ${{ matrix.configuration }} -r ${{ matrix.short-os }}-${{ matrix.arch }}
-    - name: Build Test
-      run: dotnet build AviationCalcUtilNetTests/AviationCalcUtilNetTests.csproj -c ${{ matrix.configuration }} -r ${{ matrix.short-os }}-${{ matrix.arch }}
     - name: Test
-      run: dotnet test --no-build --verbosity normal -c ${{ matrix.configuration }}
+      run: dotnet test --verbosity normal -c ${{ matrix.configuration }} -r ${{ matrix.short-os }}-${{ matrix.arch }}
     - name: Pack NuGet Package
       if: ${{ matrix.configuration == 'Release' }}
       run: dotnet pack AviationCalcUtilNet.csproj --no-build -c ${{ matrix.configuration }} -o out\nuget --include-symbols
