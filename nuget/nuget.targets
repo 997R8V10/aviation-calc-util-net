@@ -1,8 +1,8 @@
 <Project>
   <ItemGroup>
-    <Files Include="$(MSBuildThisFileDirectory)/../contentFiles/**/*.*" />
+    <NativeDepFiles Include="$(MSBuildThisFileDirectory)/../contentFiles/**/*.*" />
   </ItemGroup>
-  <Target Name="CopyFiles" AfterTargets="Build">
-    <Copy SourceFiles="@(Files)" DestinationFolder="$(TargetDir)/%(FileName)$(Extension)" />
+  <Target Name="CopyNativeDepFiles" AfterTargets="Build">
+    <Copy SourceFiles="@(NativeDepFiles)" DestinationFolder="$(TargetDir)" />
   </Target>
 </Project>
