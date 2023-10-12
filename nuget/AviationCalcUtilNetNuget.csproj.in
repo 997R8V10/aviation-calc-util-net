@@ -41,12 +41,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="nuget.targets" PackagePath="build/PShivaraman.AviationCalcUtilNet.^RuntimeIdentifier^.targets" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="" />
     <None Include="LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
-  
+
   <ItemGroup>
-    <PackageReference Include="PShivaraman.AviationCalcUtil.^RuntimeIdentifier^" Version="1.0.4" />
+    <PackageReference Include="PShivaraman.AviationCalcUtil.^RuntimeIdentifier^" Version="1.0.12" />
   </ItemGroup>
 
 </Project>
