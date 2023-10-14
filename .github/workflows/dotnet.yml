@@ -65,6 +65,26 @@ jobs:
           name: AviationCalcUtilNet-NuGet
           path: |
             ${{ github.workspace }}/out/nuget/*
+  create-github-release:
+    if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')}}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download Nuget Files
+        uses: actions/download-artifact@v3
+        with:
+          name: AviationCalcUtil-Nuget
+          path: ${{ github.workspace }}/NuGet
+      - name: Extract Nuget Packages
+        run: unzip ${{ github.workspace }}/NuGet/*.nupkg -d ${{ github.workspace }}/NuGet
+      - name: Tar Binaries
+        run: tar -czvf ${{ github.workspace}}/bins/AviationCalcUtilNet.tar.gz ${{ github.workspace }}/NuGet/lib/*.*
+      - uses: "marvinpinto/action-automatic-releases@v1.2.1"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            ${{ github.workspace}}/bins/*.tar.gz
   upload-nuget-package:
     if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')}}
     runs-on: ubuntu-latest
