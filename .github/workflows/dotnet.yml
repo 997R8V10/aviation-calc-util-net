@@ -73,7 +73,7 @@ jobs:
       - name: Download Nuget Files
         uses: actions/download-artifact@v3
         with:
-          name: AviationCalcUtil-Nuget
+          name: AviationCalcUtilNet-NuGet
           path: ${{ github.workspace }}/NuGet
       - name: Extract Nuget Packages
         run: unzip ${{ github.workspace }}/NuGet/*.nupkg -d ${{ github.workspace }}/NuGet
