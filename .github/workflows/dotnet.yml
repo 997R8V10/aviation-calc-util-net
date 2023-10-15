@@ -78,7 +78,10 @@ jobs:
       - name: Extract Nuget Packages
         run: unzip ${{ github.workspace }}/NuGet/*.nupkg -d ${{ github.workspace }}/NuGet
       - name: Tar Binaries
-        run: tar -czvf ${{ github.workspace}}/bins/AviationCalcUtilNet.tar.gz ${{ github.workspace }}/NuGet/lib/*.*
+        run: |
+          mkdir -p ${{ github.workspace}}/bins
+          cd ${{ github.workspace }}/NuGet/lib
+          tar -czvf ${{ github.workspace}}/bins/AviationCalcUtilNet.tar.gz *.*
       - uses: "marvinpinto/action-automatic-releases@v1.2.1"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"

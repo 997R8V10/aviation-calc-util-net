@@ -12,6 +12,9 @@ namespace AviationCalcUtilNet.GeoTools
         private static extern double GeoUtilCalculateCrossTrackErrorM(IntPtr aircraft, IntPtr waypoint, double course, out double requiredCourse, out double alongTrackDistanceM);
 
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
+        private static extern double GeoUtilCalculateArcCourseInfo(IntPtr aircraft, IntPtr arcCenter, double startRadial, double endRadial, double radiusM, bool clockwise, out double requiredCourse, out double alongTrackDistanceM);
+
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilCalculateTurnLeadInDistance(IntPtr ptr, double theta, double r);
 
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
@@ -55,6 +58,9 @@ namespace AviationCalcUtilNet.GeoTools
 
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilCalculateTurnAmount(double currentHeading, double desiredHeading);
+
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
+        private static extern double GeoUtilCalculateDeltaToHeading(double currentHeading, double desiredHeading, bool isRightTurn);
 
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)]
         private static extern double GeoUtilGetEarthRadiusM();
@@ -110,6 +116,24 @@ namespace AviationCalcUtilNet.GeoTools
         {
             return GeoUtilCalculateCrossTrackErrorM(aircraft.ptr, waypoint.ptr, course, out requiredCourse, out alongTrackDistanceM);
         }
+
+        /// <summary>
+        /// Calculates Cross Track Error in meters for an arc.
+        /// </summary>
+        /// <param name="aircraft">Aircraft's Position</param>
+        /// <param name="arcCenter">Arc Center Position</param>
+        /// <param name="startRadial">Start Radial (degrees)</param>
+        /// <param name="endRadial">End Radial (degrees)</param>
+        /// <param name="radiusM">Radius (m)</param>
+        /// <param name="clockwise">Is Turn Clockwise?</param>
+        /// <param name="requiredCourse">Output's course along arc at current position.</param>
+        /// <param name="alongTrackDistanceM">Output's distance along arc. -1 if end radial has been passed</param>
+        /// <returns>Cross track error (m). Right: Positive; Left: Negative;</returns>
+        public static double CalculateArcCourseInfo(GeoPoint aircraft, GeoPoint arcCenter, double startRadial, double endRadial, double radiusM, bool clockwise, out double requiredCourse, out double alongTrackDistanceM)
+        {
+            return GeoUtilCalculateArcCourseInfo(aircraft.ptr, arcCenter.ptr, startRadial, endRadial, radiusM, clockwise, out requiredCourse, out alongTrackDistanceM);
+        }
+
 
         /// <summary>
         /// Calculates required lead in distance for a turn.
@@ -294,7 +318,19 @@ namespace AviationCalcUtilNet.GeoTools
         {
             return GeoUtilCalculateTurnAmount(currentHeading, desiredHeading);
         }
-        
+
+        /// <summary>
+        /// Calculate the delta to the desired heading (0-360)
+        /// </summary>
+        /// <param name="currentHeading">Current heading (degrees)</param>
+        /// <param name="desiredHeading">Desired heading (degrees)</param>
+        /// <param name="isRightTurn"></param>
+        /// <returns>Delta to Heading (degrees).</returns>
+        public static double CalculateDeltaToHeading(double currentHeading, double desiredHeading, bool isRightTurn)
+        {
+            return GeoUtilCalculateDeltaToHeading(currentHeading, desiredHeading, isRightTurn);
+        }
+
         public static double EARTH_RADIUS_M => GeoUtilGetEarthRadiusM();
 
         /// <summary>
