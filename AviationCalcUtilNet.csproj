@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Platforms>AnyCPU</Platforms>
-    <AssemblyVersion>1.1.1</AssemblyVersion>
-    <FileVersion>1.1.1</FileVersion>
-    <Version>1.1.1</Version>
+    <AssemblyVersion>1.1.2</AssemblyVersion>
+    <FileVersion>1.1.2</FileVersion>
+    <Version>1.1.2</Version>
     <Authors>Prithvi Shivaraman</Authors>
     <Description>.NET Wrapper for Aviation Calc Util Native Library</Description>
     <Summary>.NET Wrapper for Aviation Calc Util Native Library</Summary>
@@ -53,7 +53,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="PShivaraman.AviationCalcUtil" Version="1.1.1">
+    <PackageReference Include="PShivaraman.AviationCalcUtil" Version="1.1.2">
       <!-- See https://docs.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#controlling-dependency-assets. -->
       <!-- We want to make NPM-Targets' .props and .targets files available to consumer projects, so we need to specify
            "build" here. We also need "contentFiles", because without it no "include" attribute is generated on the
