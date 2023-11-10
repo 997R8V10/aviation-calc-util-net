@@ -17,6 +17,7 @@ namespace AviationCalcUtilNet.GeoTools
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointDistanceM(IntPtr ptr1, IntPtr ptr2);
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointDistanceNMi(IntPtr ptr1, IntPtr ptr2);
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr GeoPointIntersection(IntPtr ptr1, double bearing1, IntPtr ptr2, double bearing2);
+        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr GeoPointFindClosestIntersection(IntPtr ptr1, double radial1, IntPtr ptr2, double radial2);
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointInitialBearing(IntPtr ptr1, IntPtr ptr2);
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointFinalBearing(IntPtr ptr1, IntPtr ptr2);
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern bool GeoPointEquals(IntPtr ptr1, IntPtr ptr2);
@@ -80,6 +81,17 @@ namespace AviationCalcUtilNet.GeoTools
         public static GeoPoint Intersection(GeoPoint point1, double bearing1, GeoPoint point2, double bearing2)
         {
             IntPtr ptr = GeoPointIntersection(point1.ptr, bearing1, point2.ptr, bearing2);
+            if (ptr == IntPtr.Zero)
+            {
+                return null;
+            }
+
+            return new GeoPoint(ptr);
+        }
+
+        public static GeoPoint FindClosestIntersection(GeoPoint point1, double radial1, GeoPoint point2, double radial2)
+        {
+            IntPtr ptr = GeoPointFindClosestIntersection(point1.ptr, radial1, point2.ptr, radial2);
             if (ptr == IntPtr.Zero)
             {
                 return null;
