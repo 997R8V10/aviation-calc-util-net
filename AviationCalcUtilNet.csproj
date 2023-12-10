@@ -45,6 +45,7 @@
     <None Remove="AviationCalcUtilNetTests\**" />
     <None Remove="build\**" />
     <None Remove="out\**" />
+    <None Remove="Units\" />
   </ItemGroup>
 
   <!-- <ItemGroup>
@@ -68,5 +69,8 @@
       <!-- We specify "none" here to override the default value, which includes "build". -->
       <PrivateAssets>none</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Units\" />
   </ItemGroup>
 </Project>

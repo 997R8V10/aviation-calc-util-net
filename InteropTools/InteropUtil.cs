@@ -15,6 +15,17 @@ namespace AviationCalcUtilNet.InteropTools
 
     internal class InteropUtil
     {
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double general_free_string(IntPtr ptr);
+
+        internal static string MarshallUnmanagedStringPtr(IntPtr strPtr)
+        {
+            string str = Marshal.PtrToStringAnsi(strPtr);
+
+            general_free_string(strPtr);
+
+            return str;
+        }
+
         internal static InteropDateStruct ManagedDateToDateStruct(DateTime date)
         {
             date = date.ToUniversalTime();
