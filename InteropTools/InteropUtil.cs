@@ -13,6 +13,13 @@ namespace AviationCalcUtilNet.InteropTools
         internal int day;
     }
 
+    internal struct InteropArrStruct
+    {
+        internal IntPtr ptr;
+        internal UIntPtr length;
+        internal UIntPtr capacity;
+    }
+
     internal class InteropUtil
     {
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double general_free_string(IntPtr ptr);

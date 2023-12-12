@@ -3,67 +3,37 @@ using System.Runtime.InteropServices;
 
 namespace AviationCalcUtilNet.Units
 {
+    /// <summary>
+    /// Represents a length quantity.
+    /// </summary>
 	public class Length : ICloneable, IComparable
-	{
+    {
         internal IntPtr ptr;
 
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_new(double value);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double units_length_value(IntPtr ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_drop(IntPtr ptr);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern bool units_length_equals(IntPtr ptr, IntPtr other);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern bool units_length_eq(IntPtr ptr, IntPtr other);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern bool units_length_ne(IntPtr ptr, IntPtr other);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern int units_length_compare(IntPtr ptr, IntPtr other);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern bool units_length_gt(IntPtr ptr, IntPtr other);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern bool units_length_ge(IntPtr ptr, IntPtr other);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern bool units_length_lt(IntPtr ptr, IntPtr other);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern bool units_length_le(IntPtr ptr, IntPtr other);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_to_string(IntPtr ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_clone(IntPtr ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_neg(IntPtr ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_add(IntPtr ptr, IntPtr rhs_ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_add_f64(IntPtr ptr, double rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_add_f32(IntPtr ptr, float rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_add_i32(IntPtr ptr, int rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_add_i64(IntPtr ptr, long rhs);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_sub(IntPtr ptr, IntPtr rhs_ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_sub_f64(IntPtr ptr, double rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_sub_f32(IntPtr ptr, float rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_sub_i32(IntPtr ptr, int rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_sub_i64(IntPtr ptr, long rhs);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_mul(IntPtr ptr, IntPtr rhs_ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_mul_f64(IntPtr ptr, double rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_mul_f32(IntPtr ptr, float rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_mul_i32(IntPtr ptr, int rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_mul_i64(IntPtr ptr, long rhs);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_div(IntPtr ptr, IntPtr rhs_ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_div_f64(IntPtr ptr, double rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_div_f32(IntPtr ptr, float rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_div_i32(IntPtr ptr, int rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_div_i64(IntPtr ptr, long rhs);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_rem(IntPtr ptr, IntPtr rhs_ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_rem_f64(IntPtr ptr, double rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_rem_f32(IntPtr ptr, float rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_rem_i32(IntPtr ptr, int rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_rem_i64(IntPtr ptr, long rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_add_assign(IntPtr ptr, IntPtr rhs_ptr);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_add_assign_f64(IntPtr ptr, double rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_add_assign_f32(IntPtr ptr, float rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_add_assign_i32(IntPtr ptr, int rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_add_assign_i64(IntPtr ptr, long rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_sub_assign(IntPtr ptr, IntPtr rhs_ptr);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_sub_assign_f64(IntPtr ptr, double rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_sub_assign_f32(IntPtr ptr, float rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_sub_assign_i32(IntPtr ptr, int rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_sub_assign_i64(IntPtr ptr, long rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_mul_assign(IntPtr ptr, IntPtr rhs_ptr);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_mul_assign_f64(IntPtr ptr, double rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_mul_assign_f32(IntPtr ptr, float rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_mul_assign_i32(IntPtr ptr, int rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_mul_assign_i64(IntPtr ptr, long rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_div_assign(IntPtr ptr, IntPtr rhs_ptr);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_div_assign_f64(IntPtr ptr, double rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_div_assign_f32(IntPtr ptr, float rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_div_assign_i32(IntPtr ptr, int rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_div_assign_i64(IntPtr ptr, long rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_rem_assign(IntPtr ptr, IntPtr rhs_ptr);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_rem_assign_f64(IntPtr ptr, double rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_rem_assign_f32(IntPtr ptr, float rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_rem_assign_i32(IntPtr ptr, int rhs);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void units_length_rem_assign_i64(IntPtr ptr, long rhs);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_from_feet(double val);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_abs(IntPtr ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_powi(IntPtr ptr, int n);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_powf(IntPtr ptr, double n);
@@ -78,7 +48,7 @@ namespace AviationCalcUtilNet.Units
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_acos(IntPtr ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_atan(IntPtr ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_atan2(IntPtr ptr, IntPtr other_ptr);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_from_feet(double val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_from_meters(double val);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_from_nautical_miles(double val);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_from_statute_miles(double val);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double units_length_as_meters(IntPtr ptr);
@@ -95,44 +65,144 @@ namespace AviationCalcUtilNet.Units
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double units_length_static_convert_nautical_miles_to_meters(double val);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double units_length_static_convert_statute_miles_to_meters(double val);
 
-
-        public double Meters => units_length_as_meters(ptr);
-
-        public double Feet => units_length_as_feet(ptr);
-
-        public double NauticalMiles => units_length_as_nautical_miles(ptr);
-
-        public double StatuteMiles => units_length_as_statute_miles(ptr);
-
-        public Length(double meters)
-		{
-            ptr = units_length_new(meters);
-		}
-
         internal Length(IntPtr ptr)
         {
             this.ptr = ptr;
         }
 
-        public static Length operator -(Length a) => new Length(units_length_neg(a.ptr));
+        /// <summary>
+        /// Creates a new Length.
+        /// </summary>
+        /// <param name="meters">Value in m (meters)</param>
+        public Length(double meters)
+        {
+            ptr = units_length_new(meters);
+        }
 
+        /// <summary>
+        /// Creates a new Length.
+        /// </summary>
+        /// <param name="val">Value in  m (meters)</param>
+        public static Length FromMeters(double val)
+        {
+            return new Length(units_length_from_meters(val));
+        }
+
+        /// <summary>
+        /// Creates a new Length.
+        /// </summary>
+        /// <param name="val">Value in ft (feet)</param>
+        public static Length FromFeet(double val)
+        {
+            return new Length(units_length_from_feet(val));
+        }
+
+        /// <summary>
+        /// Creates a new Length.
+        /// </summary>
+        /// <param name="val">Value in nmi (nautical miles)</param>
+        public static Length FromNauticalMiles(double val)
+        {
+            return new Length(units_length_from_nautical_miles(val));
+        }
+
+        /// <summary>
+        /// Creates a new Length.
+        /// </summary>
+        /// <param name="val">Value in mi (statute miles)</param>
+        public static Length FromStatuteMiles(double val)
+        {
+            return new Length(units_length_from_statute_miles(val));
+        }
+
+        /// <summary>
+        /// Gets the length in m (meters).
+        /// </summary>
+        public double Meters => units_length_as_meters(ptr);
+
+        /// <summary>
+        /// Gets the length in ft (feet).
+        /// </summary>
+        public double Feet => units_length_as_feet(ptr);
+
+        /// <summary>
+        /// Gets the length in nmi (nautical miles).
+        /// </summary>
+        public double NauticalMiles => units_length_as_nautical_miles(ptr);
+
+        /// <summary>
+        /// Gets the length in mi (statute miles).
+        /// </summary>
+        public double StatuteMiles => units_length_as_statute_miles(ptr);
+
+        /// <summary>
+        /// Gets the length in m (meters).
+        /// </summary>
+        public double Value()
+        {
+            return units_length_value(ptr);
+        }
+
+        /// <inheritdoc />
+        public static Length operator -(Length a) => new Length(units_length_neg(a.ptr));
+        /// <inheritdoc />
         public static Length operator +(Length a, Length b) => new Length(units_length_add(a.ptr, b.ptr));
+        /// <inheritdoc />
         public static Length operator -(Length a, Length b) => new Length(units_length_sub(a.ptr, b.ptr));
+        /// <inheritdoc />
         public static Length operator *(Length a, Length b) => new Length(units_length_mul(a.ptr, b.ptr));
+        /// <inheritdoc />
         public static Length operator /(Length a, Length b) => new Length(units_length_div(a.ptr, b.ptr));
+        /// <inheritdoc />
         public static Length operator %(Length a, Length b) => new Length(units_length_rem(a.ptr, b.ptr));
 
-        public static Length operator +(Length a, int b) => new Length(units_length_add_i32(a.ptr, b));
-        public static Length operator -(Length a, int b) => new Length(units_length_sub_i32(a.ptr, b));
-        public static Length operator *(Length a, int b) => new Length(units_length_mul_i32(a.ptr, b));
-        public static Length operator /(Length a, int b) => new Length(units_length_div_i32(a.ptr, b));
-        public static Length operator %(Length a, int b) => new Length(units_length_rem_i32(a.ptr, b));
+        /// <inheritdoc />
+        public static Length operator +(Length a, double b) => new Length(units_length_add_f64(a.ptr, b));
+        /// <inheritdoc />
+        public static Length operator -(Length a, double b) => new Length(units_length_sub_f64(a.ptr, b));
+        /// <inheritdoc />
+        public static Length operator *(Length a, double b) => new Length(units_length_mul_f64(a.ptr, b));
+        /// <inheritdoc />
+        public static Length operator /(Length a, double b) => new Length(units_length_div_f64(a.ptr, b));
+        /// <inheritdoc />
+        public static Length operator %(Length a, double b) => new Length(units_length_rem_f64(a.ptr, b));
 
+        // Constants
+        /// <summary>
+        /// Conversion factor from m (meters) to ft (feet)
+        /// </summary>
+        public static double CONV_FACTOR_M_FT => units_length_get_const_CONV_FACTOR_M_FT();
+
+        /// <summary>
+        /// Conversion factor from nmi (nautical miles) to m (meters)
+        /// </summary>
+        public static double CONV_FACTOR_NMI_M => units_length_get_const_CONV_FACTOR_NMI_M();
+
+        /// <summary>
+        /// Conversion factor from mi (statute miles) to m (meters)
+        /// </summary>
+        public static double CONV_FACTOR_MI_M => units_length_get_const_CONV_FACTOR_MI_M();
+
+        /// <inheritdoc />
+        public static bool operator ==(Length a, Length b) => a != null && a.Equals(b);
+        /// <inheritdoc />
+        public static bool operator !=(Length a, Length b) => a != null && !a.Equals(b);
+        /// <inheritdoc />
+        public static bool operator <(Length a, Length b) => a != null && a.CompareTo(b) < 0;
+        /// <inheritdoc />
+        public static bool operator >(Length a, Length b) => a != null && a.CompareTo(b) > 0;
+        /// <inheritdoc />
+        public static bool operator <=(Length a, Length b) => a != null && a.CompareTo(b) <= 0;
+        /// <inheritdoc />
+        public static bool operator >=(Length a, Length b) => a != null && a.CompareTo(b) >= 0;
+
+        /// <inheritdoc />
         public object Clone()
         {
             return new Length(units_length_clone(ptr));
         }
 
+        /// <inheritdoc />
         public int CompareTo(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
@@ -143,6 +213,7 @@ namespace AviationCalcUtilNet.Units
             return units_length_compare(ptr, ((Length)obj).ptr);
         }
 
+        /// <inheritdoc />
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
@@ -150,21 +221,22 @@ namespace AviationCalcUtilNet.Units
                 return false;
             }
 
-            return units_length_equals(ptr, ((Length)obj).ptr);
+            return units_length_eq(ptr, ((Length)obj).ptr);
         }
 
-        // override object.GetHashCode
+        /// <inheritdoc />
         public override int GetHashCode()
         {
-            // TODO: write your implementation of GetHashCode() here
-            return base.GetHashCode();
+            return Meters.GetHashCode();
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             return InteropTools.InteropUtil.MarshallUnmanagedStringPtr(units_length_to_string(ptr));
         }
 
+        /// <inheritdoc />
         ~Length()
         {
             units_length_drop(ptr);
