@@ -5,51 +5,6 @@ using System.Text;
 
 namespace AviationCalcUtilNet.InteropTools
 {
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct DegMinSec
-    {
-        internal int degrees;
-        internal uint mins;
-        internal double secs;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct InteropWindStruct
-    {
-        internal IntPtr dir;
-        internal IntPtr spd;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct InteropSpeedMachStruct
-    {
-        internal IntPtr speed;
-        internal double mach;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct InteropDateStruct
-    {
-        internal int year;
-        internal uint month;
-        internal uint day;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct InteropDateTimeStruct
-    {
-        internal long secs;
-        internal uint nsecs;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct InteropArrStruct
-    {
-        internal IntPtr ptr;
-        internal UIntPtr length;
-        internal UIntPtr capacity;
-    }
-
     internal class InteropUtil
     {
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double general_free_string(IntPtr ptr);
