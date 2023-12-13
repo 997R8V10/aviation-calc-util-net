@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AviationCalcUtilNet.InteropTools;
+using System;
 using System.Runtime.InteropServices;
 
 namespace AviationCalcUtilNet.Units
@@ -182,6 +183,8 @@ namespace AviationCalcUtilNet.Units
         /// <inheritdoc />
         public static Length operator /(Length a, double b) => new Length(units_length_div_f64(a.ptr, b));
         /// <inheritdoc />
+        public static Velocity operator /(Length a, TimeSpan b) => new Velocity(units_length_div_duration(a.ptr, InteropUtil.ManagedTimeSpanToDateTimeStruct(b)));
+        /// <inheritdoc />
         public static Length operator %(Length a, double b) => new Length(units_length_rem_f64(a.ptr, b));
         /// <inheritdoc />
         public static bool operator ==(Length a, Length b) => a != null && a.Equals(b);
@@ -259,6 +262,7 @@ namespace AviationCalcUtilNet.Units
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_mul_f64(IntPtr ptr, double rhs);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_div(IntPtr ptr, IntPtr rhs_ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_div_f64(IntPtr ptr, double rhs);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_div_duration(IntPtr ptr, InteropDateTimeStruct rhs);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_rem(IntPtr ptr, IntPtr rhs_ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_rem_f64(IntPtr ptr, double rhs);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_length_from_feet(double val);

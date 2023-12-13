@@ -11,6 +11,8 @@ namespace AviationCalcUtilNet.Units
     /// </summary>
     public static class UnitMath
     {
+
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static Length Abs(Length a)
         {
             return new Length(units_length_abs(a.ptr));
@@ -484,5 +486,8 @@ namespace AviationCalcUtilNet.Units
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_angular_velocity_acos(IntPtr ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_angular_velocity_atan(IntPtr ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_angular_velocity_atan2(IntPtr ptr, IntPtr other_ptr);
+
+
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }
