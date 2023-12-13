@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace AviationCalcUtilNet.GeoTools.MagneticTools
+namespace AviationCalcUtilNet.Magnetic
 {
     public class MagneticFieldElements
     {
@@ -110,6 +110,6 @@ namespace AviationCalcUtilNet.GeoTools.MagneticTools
         {
             DisposeMagneticElements(ptr);
         }
-        
+
     }
 }

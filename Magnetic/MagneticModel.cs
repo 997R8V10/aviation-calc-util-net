@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace AviationCalcUtilNet.GeoTools.MagneticTools
+namespace AviationCalcUtilNet.Magnetic
 {
     public class MagneticModel
     {
@@ -47,8 +47,10 @@ namespace AviationCalcUtilNet.GeoTools.MagneticTools
 
         public double ModelEpoch => MagModelGetModelEpoch(ptr);
 
-        public string ModelName {
-            get {
+        public string ModelName
+        {
+            get
+            {
                 return Marshal.PtrToStringAnsi(MagModelGetModelName(ptr));
             }
         }
