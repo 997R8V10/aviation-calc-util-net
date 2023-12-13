@@ -1,4 +1,5 @@
 ﻿using System;
+using AviationCalcUtilNet.Aviation;
 using AviationCalcUtilNet.Geo;
 using AviationCalcUtilNet.GeoTools;
 using AviationCalcUtilNet.Units;
@@ -20,11 +21,11 @@ namespace AviationCalcUtilNetTests
             GeoPoint center = new GeoPoint(Latitude.FromDegrees(38), Longitude.FromDegrees(-77));
             GeoPoint aircraft = new GeoPoint(Latitude.FromDegrees(38), Longitude.FromDegrees(-77));
             aircraft.MoveBy(Bearing.FromDegrees(280), Length.FromMeters(11000));
-            double xTk = GeoUtil.CalculateArcCourseInfo(aircraft, center, 250, 30, 10000, true, out double requiredCourse, out double aTk);
+            (Bearing requiredCourse, Length aTk, Length xTk) = AviationUtil.CalculateArcCourseIntercept(aircraft, center, Bearing.FromDegrees(250), Bearing.FromDegrees(30), Length.FromMeters(10000), true);
 
-            Assert.LessOrEqual(Math.Abs(xTk - -1000), 1.0);
-            Assert.LessOrEqual(Math.Abs(requiredCourse - 10), 0.1);
-            Assert.LessOrEqual(Math.Abs(aTk - 19198.62), 1.0);
+            Assert.LessOrEqual(Math.Abs(xTk.Meters - -1000), 1.0);
+            Assert.LessOrEqual(Math.Abs(requiredCourse.Degrees - 10), 0.1);
+            Assert.LessOrEqual(Math.Abs(aTk.Meters - 19198.62), 1.0);
         }
 	}
 }

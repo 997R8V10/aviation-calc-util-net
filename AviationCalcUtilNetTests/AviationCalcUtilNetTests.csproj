@@ -20,4 +20,10 @@
       <ProjectReference Include="..\AviationCalcUtilNet.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="WMM.COF">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

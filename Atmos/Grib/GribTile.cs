@@ -8,7 +8,7 @@ using System.Text;
 
 namespace AviationCalcUtilNet.Atmos.Grib
 {
-    public class GribTile
+    public class GribTile : IGeoTile
     {
         internal IntPtr ptr;
 

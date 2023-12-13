@@ -7,7 +7,8 @@ namespace AviationCalcUtilNet.InteropTools
 {
     internal class InteropUtil
     {
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double general_free_string(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void general_free_string(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void general_free_vec_f64(InteropArrStruct ptr);
 
         internal static string MarshallUnmanagedStringPtr(IntPtr strPtr)
         {
@@ -16,6 +17,14 @@ namespace AviationCalcUtilNet.InteropTools
             general_free_string(strPtr);
 
             return str;
+        }
+
+        internal static double[] MarshallUnmanagedDoubleArr(InteropArrStruct arrStr)
+        {
+            double[] asArray = new double[(int)arrStr.length];
+            Marshal.Copy(arrStr.ptr, asArray, 0, (int) arrStr.length);
+            general_free_vec_f64(arrStr);
+            return asArray;
         }
 
         internal static InteropDateStruct ManagedDateToDateStruct(DateTime date)
@@ -75,6 +84,16 @@ namespace AviationCalcUtilNet.InteropTools
             ticks += (s.nsecs / 100);
 
             return new TimeSpan(ticks);
+        }
+
+        internal static InteropArrStruct2<T> ManagedArrayToStruct<T>(T[] ptrArray)
+        {
+            return new InteropArrStruct2<T>()
+            {
+                ptr = ptrArray,
+                length = new UIntPtr((uint)ptrArray.Length),
+                capacity = new UIntPtr((uint)ptrArray.Length)
+            };
         }
     }
 }

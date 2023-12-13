@@ -70,8 +70,4 @@
       <PrivateAssets>none</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Aviation\" />
-  </ItemGroup>
 </Project>

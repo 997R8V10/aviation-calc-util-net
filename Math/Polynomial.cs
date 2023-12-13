@@ -1,55 +1,50 @@
+using AviationCalcUtilNet.InteropTools;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace AviationCalcUtilNet.MathTools
 {
+    /// <summary>
+    /// Representaion of a polynomial
+    /// </summary>
     public class Polynomial
     {
         internal IntPtr ptr;
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CreatePolynomial(double[] coefficients, int coefficientsSize);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void DisposePolynomial(IntPtr ptr);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double PolynomialEvaluate(IntPtr ptr, double x);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr PolynomialDerivative(IntPtr ptr, int n);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr PolynomialGetCoefficients(IntPtr ptr, out int size);
 
         internal Polynomial(IntPtr ptr)
         {
             this.ptr = ptr;
         }
 
-        public Polynomial(List<double> coefficients)
+        public Polynomial(double[] coefficients)
         {
-            ptr = CreatePolynomial(coefficients.ToArray(), coefficients.Count);
+            ptr = math_polynomial_new(InteropUtil.ManagedArrayToStruct(coefficients));
         }
 
         ~Polynomial()
         {
-            DisposePolynomial(ptr);
+            math_polynomial_drop(ptr);
         }
 
         public double Evaluate(double x)
         {
-            return PolynomialEvaluate(ptr, x);
+            return math_polynomial_evaluate(ptr, x);
         }
 
         public Polynomial Derivative(int n)
         {
-            IntPtr returned = PolynomialDerivative(ptr, n);
-            if (returned != IntPtr.Zero)
-            {
-                return new Polynomial(returned);
-            }
-            return null;
+            IntPtr returned = math_polynomial_derivative(ptr, n);
+            return new Polynomial(returned);
         }
 
-        public List<double> GetCoefficients()
-        {
-            IntPtr returned = PolynomialGetCoefficients(ptr, out var size);
-            double[] asArray = new double[size];
-            Marshal.Copy(returned, asArray, 0, size);
-            return new List<double>(asArray);
-        }
-        
+        public double[] Coefficients => InteropUtil.MarshallUnmanagedDoubleArr(math_polynomial_coefficients(ptr));
+
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern InteropArrStruct math_polynomial_coefficients(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr math_polynomial_derivative(IntPtr ptr, int n);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void math_polynomial_drop(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double math_polynomial_evaluate(IntPtr ptr, double x);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr math_polynomial_new(InteropArrStruct2<double> coeffs);
+
     }
 }

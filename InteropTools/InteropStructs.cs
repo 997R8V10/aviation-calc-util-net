@@ -51,6 +51,14 @@ namespace AviationCalcUtilNet.InteropTools
     }
 
     [StructLayout(LayoutKind.Sequential)]
+    internal struct InteropArrStruct2<T>
+    {
+        internal T[] ptr;
+        internal UIntPtr length;
+        internal UIntPtr capacity;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
     internal struct InteropCourseInterceptInfo
     {
         internal IntPtr required_course;

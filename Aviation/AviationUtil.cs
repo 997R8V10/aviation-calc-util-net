@@ -9,6 +9,9 @@ using System.Text;
 
 namespace AviationCalcUtilNet.Aviation
 {
+    /// <summary>
+    /// Aviation Related Calculations
+    /// </summary>
     public static class AviationUtil
     {
         /// <summary>

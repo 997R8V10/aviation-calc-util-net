@@ -6,68 +6,105 @@ using System.Text;
 
 namespace AviationCalcUtilNet.Magnetic
 {
-    public class MagneticModelCoefficients
+    public class MagneticModelCoefficients : ICloneable
     {
         internal IntPtr ptr;
-
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CopyMagModelCoeffs(IntPtr o);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CreateMagModelCoeffs(int n, int m, double g_nm, double h_nm, double g_dot_nm, double h_dot_nm);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void DisposeMagModelCoeffs(IntPtr coeffs);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern int MagModelCoeffsGetN(IntPtr coeffs);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern int MagModelCoeffsGetM(IntPtr coeffs);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double MagModelCoeffsGetG(IntPtr coeffs);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double MagModelCoeffsGetH(IntPtr coeffs);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double MagModelCoeffsGetGDot(IntPtr coeffs);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double MagModelCoeffsGetHDot(IntPtr coeffs);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr MagModelCoeffsGetPointOnDate(IntPtr coeffs, double modelEpoch, InteropDateStruct dateStruct);
 
         internal MagneticModelCoefficients(IntPtr ptr)
         {
             this.ptr = ptr;
         }
 
-        public MagneticModelCoefficients(int n, int m, double g_nm, double h_nm, double g_dot_nm, double h_dot_nm)
+        public MagneticModelCoefficients()
         {
-            ptr = CreateMagModelCoeffs(n, m, g_nm, h_nm, g_dot_nm, h_dot_nm);
+            ptr = magnetic_magnetic_model_coefficients_default();
         }
 
         public MagneticModelCoefficients GetPointOnDate(double modelEpoch, DateTime date)
         {
-            IntPtr retPtr = MagModelCoeffsGetPointOnDate(ptr, modelEpoch, InteropUtil.ManagedDateToDateStruct(date));
-            if (retPtr == IntPtr.Zero)
-            {
-                return null;
-            }
-
+            IntPtr retPtr = magnetic_magnetic_model_coefficients_get_point_on_date(ptr, modelEpoch, InteropUtil.ManagedDateToDateStruct(date));
             return new MagneticModelCoefficients(retPtr);
         }
 
-        MagneticModelCoefficients GetCopy()
+        public uint Degree
         {
-            IntPtr retPtr = CopyMagModelCoeffs(ptr);
-            if (retPtr == IntPtr.Zero)
-            {
-                return null;
-            }
-
-            return new MagneticModelCoefficients(retPtr);
+            get => (uint) magnetic_magnetic_model_coefficients_n(ptr);
+            set => magnetic_magnetic_model_coefficients_set_n(ptr, new UIntPtr(value));
         }
 
-        public double Degree => MagModelCoeffsGetN(ptr);
+        public uint Order
+        {
+            get => (uint)magnetic_magnetic_model_coefficients_m(ptr);
+            set => magnetic_magnetic_model_coefficients_set_m(ptr, new UIntPtr(value));
+        }
 
-        public double Order => MagModelCoeffsGetM(ptr);
+        public double MainFieldG
+        {
+            get => magnetic_magnetic_model_coefficients_g_nm(ptr);
+            set => magnetic_magnetic_model_coefficients_set_g_nm(ptr, value);
+        }
 
-        public double MainFieldG => MagModelCoeffsGetG(ptr);
+        public double MainFieldH
+        {
+            get => magnetic_magnetic_model_coefficients_h_nm(ptr);
+            set => magnetic_magnetic_model_coefficients_set_h_nm(ptr, value);
+        }
 
-        public double MainFieldH => MagModelCoeffsGetH(ptr);
+        public double SecularVariationG
+        {
+            get => magnetic_magnetic_model_coefficients_g_dot_nm(ptr);
+            set => magnetic_magnetic_model_coefficients_set_g_dot_nm(ptr, value);
+        }
 
-        public double SecularVariationG => MagModelCoeffsGetGDot(ptr);
+        public double SecularVariationH
+        {
+            get => magnetic_magnetic_model_coefficients_h_dot_nm(ptr);
+            set => magnetic_magnetic_model_coefficients_set_h_dot_nm(ptr, value);
+        }
 
-        public double SecularVariationH => MagModelCoeffsGetHDot(ptr);
+        /// <inheritdoc />
+        public static bool operator ==(MagneticModelCoefficients a, MagneticModelCoefficients b) => Equals(a, b);
+        /// <inheritdoc />
+        public static bool operator !=(MagneticModelCoefficients a, MagneticModelCoefficients b) => !Equals(a, b);
+
+        /// <inheritdoc />
+        public object Clone()
+        {
+            return new MagneticModelCoefficients(magnetic_magnetic_model_coefficients_clone(ptr));
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            return magnetic_magnetic_model_coefficients_eq(ptr, ((MagneticModelCoefficients)obj).ptr);
+        }
 
         ~MagneticModelCoefficients()
         {
-            DisposeMagModelCoeffs(ptr);
+            magnetic_magnetic_model_coefficients_drop(ptr);
         }
+
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr magnetic_magnetic_model_coefficients_clone(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr magnetic_magnetic_model_coefficients_default();
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void magnetic_magnetic_model_coefficients_drop(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern bool magnetic_magnetic_model_coefficients_eq(IntPtr ptr, IntPtr other);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double magnetic_magnetic_model_coefficients_g_dot_nm(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double magnetic_magnetic_model_coefficients_g_nm(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr magnetic_magnetic_model_coefficients_get_point_on_date(IntPtr ptr, double modelEpoch, InteropDateStruct date);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double magnetic_magnetic_model_coefficients_h_dot_nm(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double magnetic_magnetic_model_coefficients_h_nm(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern UIntPtr magnetic_magnetic_model_coefficients_m(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern UIntPtr magnetic_magnetic_model_coefficients_n(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void magnetic_magnetic_model_coefficients_set_g_dot_nm(IntPtr ptr, double val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void magnetic_magnetic_model_coefficients_set_g_nm(IntPtr ptr, double val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void magnetic_magnetic_model_coefficients_set_h_dot_nm(IntPtr ptr, double val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void magnetic_magnetic_model_coefficients_set_h_nm(IntPtr ptr, double val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void magnetic_magnetic_model_coefficients_set_m(IntPtr ptr, UIntPtr val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void magnetic_magnetic_model_coefficients_set_n(IntPtr ptr, UIntPtr val);
     }
 }
