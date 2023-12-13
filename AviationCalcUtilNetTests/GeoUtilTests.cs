@@ -1,5 +1,7 @@
 ﻿using System;
+using AviationCalcUtilNet.Geo;
 using AviationCalcUtilNet.GeoTools;
+using AviationCalcUtilNet.Units;
 using NUnit.Framework;
 
 namespace AviationCalcUtilNetTests
@@ -15,9 +17,9 @@ namespace AviationCalcUtilNetTests
         [Test]
         public void TestCalculateArcInfo1()
         {
-            GeoPoint center = new GeoPoint(38, -77, 0);
-            GeoPoint aircraft = new GeoPoint(38, -77, 0);
-            aircraft.MoveByM(280, 11000);
+            GeoPoint center = new GeoPoint(Latitude.FromDegrees(38), Longitude.FromDegrees(-77));
+            GeoPoint aircraft = new GeoPoint(Latitude.FromDegrees(38), Longitude.FromDegrees(-77));
+            aircraft.MoveBy(Bearing.FromDegrees(280), Length.FromMeters(11000));
             double xTk = GeoUtil.CalculateArcCourseInfo(aircraft, center, 250, 30, 10000, true, out double requiredCourse, out double aTk);
 
             Assert.LessOrEqual(Math.Abs(xTk - -1000), 1.0);

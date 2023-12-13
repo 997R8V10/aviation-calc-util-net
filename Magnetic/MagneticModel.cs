@@ -51,7 +51,7 @@ namespace AviationCalcUtilNet.Magnetic
         {
             get
             {
-                return Marshal.PtrToStringAnsi(MagModelGetModelName(ptr));
+                return InteropUtil.MarshallUnmanagedStringPtr(MagModelGetModelName(ptr));
             }
         }
 

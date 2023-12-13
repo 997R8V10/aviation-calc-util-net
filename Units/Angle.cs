@@ -116,9 +116,9 @@ namespace AviationCalcUtilNet.Units
         public static Angle operator %(Angle a, double b) => new Angle(units_angle_rem_f64(a.ptr, b));
 
         /// <inheritdoc />
-        public static bool operator ==(Angle a, Angle b) => a != null && a.Equals(b);
+        public static bool operator ==(Angle a, Angle b) => Equals(a, b);
         /// <inheritdoc />
-        public static bool operator !=(Angle a, Angle b) => a != null && !a.Equals(b);
+        public static bool operator !=(Angle a, Angle b) => !Equals(a, b);
         /// <inheritdoc />
         public static bool operator <(Angle a, Angle b) => a != null && a.CompareTo(b) < 0;
         /// <inheritdoc />

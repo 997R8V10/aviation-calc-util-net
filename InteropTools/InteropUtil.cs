@@ -42,6 +42,7 @@ namespace AviationCalcUtilNet.InteropTools
         internal uint nsecs;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
     internal struct InteropArrStruct
     {
         internal IntPtr ptr;
@@ -83,7 +84,8 @@ namespace AviationCalcUtilNet.InteropTools
             date = date.ToUniversalTime();
             var new_date = (DateTimeOffset) date;
             var secs = new_date.ToUnixTimeSeconds();
-            var nanos = (new_date.Subtract(TimeSpan.FromSeconds(secs)).Ticks) * 100;
+            var on_second_date = DateTimeOffset.FromUnixTimeSeconds(secs);
+            var nanos = (new_date - on_second_date).Ticks * 100;
 
             return new InteropDateTimeStruct()
             {

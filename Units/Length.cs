@@ -187,9 +187,9 @@ namespace AviationCalcUtilNet.Units
         /// <inheritdoc />
         public static Length operator %(Length a, double b) => new Length(units_length_rem_f64(a.ptr, b));
         /// <inheritdoc />
-        public static bool operator ==(Length a, Length b) => a != null && a.Equals(b);
+        public static bool operator ==(Length a, Length b) => Equals(a, b);
         /// <inheritdoc />
-        public static bool operator !=(Length a, Length b) => a != null && !a.Equals(b);
+        public static bool operator !=(Length a, Length b) => !Equals(a, b);
         /// <inheritdoc />
         public static bool operator <(Length a, Length b) => a != null && a.CompareTo(b) < 0;
         /// <inheritdoc />

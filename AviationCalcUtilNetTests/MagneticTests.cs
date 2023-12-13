@@ -25,7 +25,7 @@ namespace AviationCalcUtilNetTests
         [Test]
         public void TestMagneticField()
         {
-            MagneticUtil.GetMagneticField(new GeoPoint(0, 0), DateTime.UtcNow);
+            MagneticUtil.GetMagneticField(new GeoPoint(), DateTime.UtcNow);
         }
     }
 }

@@ -139,9 +139,9 @@ namespace AviationCalcUtilNet.GeoTools
         /// <inheritdoc />
         public static Length operator -(GeoPoint a, GeoPoint b) => new Length(geo_geo_point_sub(a.ptr, b.ptr));
         /// <inheritdoc />
-        public static bool operator ==(GeoPoint a, GeoPoint b) => a != null && a.Equals(b);
+        public static bool operator ==(GeoPoint a, GeoPoint b) => Equals(a, b);
         /// <inheritdoc />
-        public static bool operator !=(GeoPoint a, GeoPoint b) => a != null && !a.Equals(b);
+        public static bool operator !=(GeoPoint a, GeoPoint b) => !Equals(a, b);
 
         /// <inheritdoc />
         public override bool Equals(object obj)

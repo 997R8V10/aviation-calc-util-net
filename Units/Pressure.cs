@@ -147,9 +147,9 @@ namespace AviationCalcUtilNet.Units
         public static Pressure operator %(Pressure a, double b) => new Pressure(units_pressure_rem_f64(a.ptr, b));
 
         /// <inheritdoc />
-        public static bool operator ==(Pressure a, Pressure b) => a != null && a.Equals(b);
+        public static bool operator ==(Pressure a, Pressure b) => Equals(a, b);
         /// <inheritdoc />
-        public static bool operator !=(Pressure a, Pressure b) => a != null && !a.Equals(b);
+        public static bool operator !=(Pressure a, Pressure b) => !Equals(a, b);
         /// <inheritdoc />
         public static bool operator <(Pressure a, Pressure b) => a != null && a.CompareTo(b) < 0;
         /// <inheritdoc />

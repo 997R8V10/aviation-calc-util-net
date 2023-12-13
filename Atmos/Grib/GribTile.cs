@@ -38,7 +38,7 @@ namespace AviationCalcUtilNet.Atmos.Grib
         {
             get
             {
-                return Marshal.PtrToStringAnsi(grib_grib_tile_grib_file_name(ptr));
+                return InteropUtil.MarshallUnmanagedStringPtr(grib_grib_tile_grib_file_name(ptr));
             }
         }
 
@@ -46,7 +46,7 @@ namespace AviationCalcUtilNet.Atmos.Grib
         {
             get
             {
-                return Marshal.PtrToStringAnsi(grib_grib_tile_download_url(ptr));
+                return InteropUtil.MarshallUnmanagedStringPtr(grib_grib_tile_download_url(ptr));
             }
         }
 

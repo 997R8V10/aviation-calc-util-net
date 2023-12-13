@@ -97,9 +97,9 @@ namespace AviationCalcUtilNet.Atmos.Grib
         }
 
         /// <inheritdoc />
-        public static bool operator ==(GribDataPoint a, GribDataPoint b) => a != null && a.Equals(b);
+        public static bool operator ==(GribDataPoint a, GribDataPoint b) => Equals(a, b);
         /// <inheritdoc />
-        public static bool operator !=(GribDataPoint a, GribDataPoint b) => a != null && !a.Equals(b);
+        public static bool operator !=(GribDataPoint a, GribDataPoint b) => !Equals(a, b);
 
         /// <inheritdoc />
         public object Clone()

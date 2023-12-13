@@ -116,9 +116,9 @@ namespace AviationCalcUtilNet.Units
         public static Temperature operator %(Temperature a, double b) => new Temperature(units_temperature_rem_f64(a.ptr, b));
 
         /// <inheritdoc />
-        public static bool operator ==(Temperature a, Temperature b) => a != null && a.Equals(b);
+        public static bool operator ==(Temperature a, Temperature b) => Equals(a, b);
         /// <inheritdoc />
-        public static bool operator !=(Temperature a, Temperature b) => a != null && !a.Equals(b);
+        public static bool operator !=(Temperature a, Temperature b) => !Equals(a, b);
         /// <inheritdoc />
         public static bool operator <(Temperature a, Temperature b) => a != null && a.CompareTo(b) < 0;
         /// <inheritdoc />

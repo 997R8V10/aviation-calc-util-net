@@ -149,9 +149,9 @@ namespace AviationCalcUtilNet.Units
         public static Velocity operator %(Velocity a, double b) => new Velocity(units_velocity_rem_f64(a.ptr, b));
 
         /// <inheritdoc />
-        public static bool operator ==(Velocity a, Velocity b) => a != null && a.Equals(b);
+        public static bool operator ==(Velocity a, Velocity b) => Equals(a, b);
         /// <inheritdoc />
-        public static bool operator !=(Velocity a, Velocity b) => a != null && !a.Equals(b);
+        public static bool operator !=(Velocity a, Velocity b) => !Equals(a, b);
         /// <inheritdoc />
         public static bool operator <(Velocity a, Velocity b) => a != null && a.CompareTo(b) < 0;
         /// <inheritdoc />

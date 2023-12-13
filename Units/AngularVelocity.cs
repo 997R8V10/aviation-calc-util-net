@@ -98,9 +98,9 @@ namespace AviationCalcUtilNet.Units
         public static AngularVelocity operator %(AngularVelocity a, double b) => new AngularVelocity(units_angular_velocity_rem_f64(a.ptr, b));
 
         /// <inheritdoc />
-        public static bool operator ==(AngularVelocity a, AngularVelocity b) => a != null && a.Equals(b);
+        public static bool operator ==(AngularVelocity a, AngularVelocity b) => Equals(a, b);
         /// <inheritdoc />
-        public static bool operator !=(AngularVelocity a, AngularVelocity b) => a != null && !a.Equals(b);
+        public static bool operator !=(AngularVelocity a, AngularVelocity b) => !Equals(a, b);
         /// <inheritdoc />
         public static bool operator <(AngularVelocity a, AngularVelocity b) => a != null && a.CompareTo(b) < 0;
         /// <inheritdoc />
