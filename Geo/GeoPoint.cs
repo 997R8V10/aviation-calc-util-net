@@ -1,41 +1,39 @@
+using AviationCalcUtilNet.Geo;
+using AviationCalcUtilNet.Units;
 using System;
 using System.Runtime.InteropServices;
 
 namespace AviationCalcUtilNet.GeoTools
 {
-    public class GeoPoint
+    /// <summary>
+    /// Represents a 3D Coordinate Point on the globe.
+    /// </summary>
+    public class GeoPoint : ICloneable
     {
         internal IntPtr ptr;
 
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CreateGeoPoint(double lat, double lon, double alt);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CopyGeoPoint(IntPtr ptr);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void DisposeGeoPoint(IntPtr ptr);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void GeoPointMoveByM(IntPtr ptr, double bearing, double distance);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void GeoPointMoveByNMi(IntPtr ptr, double bearing, double distance);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointFlatDistanceM(IntPtr ptr1, IntPtr ptr2);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointFlatDistanceNMi(IntPtr ptr1, IntPtr ptr2);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointDistanceM(IntPtr ptr1, IntPtr ptr2);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointDistanceNMi(IntPtr ptr1, IntPtr ptr2);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr GeoPointIntersection(IntPtr ptr1, double bearing1, IntPtr ptr2, double bearing2);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr GeoPointFindClosestIntersection(IntPtr ptr1, double radial1, IntPtr ptr2, double radial2);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointInitialBearing(IntPtr ptr1, IntPtr ptr2);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointFinalBearing(IntPtr ptr1, IntPtr ptr2);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern bool GeoPointEquals(IntPtr ptr1, IntPtr ptr2);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointGetLat(IntPtr ptr);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void GeoPointSetLat(IntPtr ptr, double newLat);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointGetLon(IntPtr ptr);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void GeoPointSetLon(IntPtr ptr, double newLon);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GeoPointGetAlt(IntPtr ptr);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void GeoPointSetAlt(IntPtr ptr, double newAlt);
-
-        public GeoPoint(double lat = 0, double lon = 0, double alt = 0)
+        /// <summary>
+        /// Creates a new GeoPoint
+        /// </summary>
+        public GeoPoint()
         {
-            ptr = CreateGeoPoint(lat, lon, alt);
+            ptr = geo_geo_point_default();
         }
 
-        public GeoPoint(GeoPoint o)
+        /// <summary>
+        /// Creates a new GeoPoint
+        /// </summary>
+        public GeoPoint(Latitude lat, Longitude lon, Length alt)
         {
-            ptr = CopyGeoPoint(o.ptr);
+            ptr = geo_geo_point_new(lat.ptr, lon.ptr, alt.ptr);
+        }
+
+        /// <summary>
+        /// Creates a new GeoPoint
+        /// </summary>
+        public GeoPoint(Latitude lat, Longitude lon)
+        {
+            ptr = geo_geo_point_new(lat.ptr, lon.ptr, new Length().ptr);
         }
 
         internal GeoPoint(IntPtr ptr)
@@ -43,44 +41,37 @@ namespace AviationCalcUtilNet.GeoTools
             this.ptr = ptr;
         }
 
-        public void MoveByM(double bearing, double distance)
+        /// <summary>
+        /// Moves the GeoPoint on a bearing by a distance
+        /// </summary>
+        public void MoveBy(Bearing bearing, Length distance)
         {
-            GeoPointMoveByM(ptr, bearing, distance);
+            geo_geo_point_move_by(ptr, bearing.ptr, distance.ptr);
         }
 
-        public void MoveByNMi(double bearing, double distance)
+        /// <summary>
+        /// Calculates the flat distance between two GeoPoints
+        /// </summary>
+        public static Length FlatDistance(GeoPoint point1, GeoPoint point2)
         {
-            GeoPointMoveByNMi(ptr, bearing, distance);
+            return new Length(geo_geo_point_flat_distance(point1.ptr, point2.ptr));
         }
 
-        public static double operator -(GeoPoint point1, GeoPoint point2)
+        /// <summary>
+        /// Calculates the distance including altitude between two GeoPoints
+        /// </summary>
+        public static Length Distance(GeoPoint point1, GeoPoint point2)
         {
-            return GeoPointDistanceM(point1.ptr, point2.ptr);
+            return new Length(geo_geo_point_distance(point1.ptr, point2.ptr));
         }
 
-        public static double FlatDistanceM(GeoPoint point1, GeoPoint point2)
+        /// <summary>
+        /// Calculates the intersection between two points and two courses
+        /// </summary>
+        /// <remarks>This function will not account for reciprocal of the bearings</remarks>
+        public static GeoPoint Intersection(GeoPoint point1, Bearing bearing1, GeoPoint point2, Bearing bearing2)
         {
-            return GeoPointFlatDistanceM(point1.ptr, point2.ptr);
-        }
-
-        public static double FlatDistanceNMi(GeoPoint point1, GeoPoint point2)
-        {
-            return GeoPointFlatDistanceNMi(point1.ptr, point2.ptr);
-        }
-
-        public static double DistanceM(GeoPoint point1, GeoPoint point2)
-        {
-            return GeoPointDistanceM(point1.ptr, point2.ptr);
-        }
-
-        public static double DistanceNMi(GeoPoint point1, GeoPoint point2)
-        {
-            return GeoPointDistanceNMi(point1.ptr, point2.ptr);
-        }
-
-        public static GeoPoint Intersection(GeoPoint point1, double bearing1, GeoPoint point2, double bearing2)
-        {
-            IntPtr ptr = GeoPointIntersection(point1.ptr, bearing1, point2.ptr, bearing2);
+            IntPtr ptr = geo_geo_point_intersection(point1.ptr, bearing1.ptr, point2.ptr, bearing2.ptr);
             if (ptr == IntPtr.Zero)
             {
                 return null;
@@ -89,9 +80,13 @@ namespace AviationCalcUtilNet.GeoTools
             return new GeoPoint(ptr);
         }
 
-        public static GeoPoint FindClosestIntersection(GeoPoint point1, double radial1, GeoPoint point2, double radial2)
+        /// <summary>
+        /// Find closest intersection between two points and two radials.
+        /// </summary>
+        /// <remarks>This function will try both the radial and the reciprocal</remarks>
+        public static GeoPoint FindClosestIntersection(GeoPoint point1, Bearing radial1, GeoPoint point2, Bearing radial2)
         {
-            IntPtr ptr = GeoPointFindClosestIntersection(point1.ptr, radial1, point2.ptr, radial2);
+            IntPtr ptr = geo_geo_point_closest_intersection(point1.ptr, radial1.ptr, point2.ptr, radial2.ptr);
             if (ptr == IntPtr.Zero)
             {
                 return null;
@@ -100,26 +95,63 @@ namespace AviationCalcUtilNet.GeoTools
             return new GeoPoint(ptr);
         }
 
-        public static double InitialBearing(GeoPoint point1, GeoPoint point2)
+        /// <summary>
+        /// Calculates initial bearing from one GeoPoint to other
+        /// </summary>
+        public static Bearing InitialBearing(GeoPoint point1, GeoPoint point2)
         {
-            return GeoPointInitialBearing(point1.ptr, point2.ptr);
+            return new Bearing(geo_geo_point_initial_bearing(point1.ptr, point2.ptr));
         }
 
-        public static double FinalBearing(GeoPoint point1, GeoPoint point2)
+        /// <summary>
+        /// Calculates final bearing from one GeoPoint to other
+        /// </summary>ram>
+        /// <returns></returns>
+        public static Bearing FinalBearing(GeoPoint point1, GeoPoint point2)
         {
-            return GeoPointFinalBearing(point1.ptr, point2.ptr);
+            return new Bearing(geo_geo_point_final_bearing(point1.ptr, point2.ptr));
         }
 
-        // override object.Equals
+        /// <summary>
+        /// Latitude
+        /// </summary>
+        public Latitude Lat {
+            get => new Latitude(geo_geo_point_lat(ptr));
+            set => geo_geo_point_set_lat(ptr, value.ptr);
+        }
+
+        /// <summary>
+        /// Longitude
+        /// </summary>
+        public Longitude Lon {
+            get => new Longitude(geo_geo_point_lon(ptr));
+            set => geo_geo_point_set_lon(ptr, value.ptr);
+        }
+
+        /// <summary>
+        /// Altitude
+        /// </summary>
+        public Length Alt {
+            get => new Length(geo_geo_point_alt(ptr));
+            set => geo_geo_point_set_alt(ptr, value.ptr);
+        }
+
+        /// <inheritdoc />
+        public static Length operator -(GeoPoint a, GeoPoint b) => new Length(geo_geo_point_sub(a.ptr, b.ptr));
+        /// <inheritdoc />
+        public static bool operator ==(GeoPoint a, GeoPoint b) => a != null && a.Equals(b);
+        /// <inheritdoc />
+        public static bool operator !=(GeoPoint a, GeoPoint b) => a != null && !a.Equals(b);
+
+        /// <inheritdoc />
         public override bool Equals(object obj)
         {
-
             if (obj == null || GetType() != obj.GetType())
             {
                 return false;
             }
 
-            return GeoPointEquals(ptr, ((GeoPoint) obj).ptr);
+            return geo_geo_point_eq(ptr, ((GeoPoint)obj).ptr);
         }
 
         // override object.GetHashCode
@@ -131,24 +163,35 @@ namespace AviationCalcUtilNet.GeoTools
             return hashCode;
         }
 
-        public double Lat {
-            get => GeoPointGetLat(ptr);
-            set => GeoPointSetLat(ptr, value);
-        }
-
-        public double Lon {
-            get => GeoPointGetLon(ptr);
-            set => GeoPointSetLon(ptr, value);
-        }
-
-        public double Alt {
-            get => GeoPointGetAlt(ptr);
-            set => GeoPointSetAlt(ptr, value);
+        /// <inheritdoc />
+        public object Clone()
+        {
+            return new GeoPoint(geo_geo_point_clone(ptr));
         }
 
         ~GeoPoint()
         {
-            DisposeGeoPoint(ptr);
+            geo_geo_point_drop(ptr);
         }
+
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_alt(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_clone(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_closest_intersection(IntPtr ptr, IntPtr bearing1, IntPtr other, IntPtr bearing2);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_default();
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_distance(IntPtr ptr, IntPtr rhs);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void geo_geo_point_drop(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern bool geo_geo_point_eq(IntPtr ptr, IntPtr rhs);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_final_bearing(IntPtr ptr, IntPtr rhs);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_flat_distance(IntPtr ptr, IntPtr rhs);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_initial_bearing(IntPtr ptr, IntPtr rhs);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_intersection(IntPtr ptr, IntPtr bearing1, IntPtr other, IntPtr bearing2);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_lat(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_lon(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void geo_geo_point_move_by(IntPtr ptr, IntPtr bearing, IntPtr distance);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_new(IntPtr lat, IntPtr lon, IntPtr alt);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void geo_geo_point_set_alt(IntPtr ptr, IntPtr val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void geo_geo_point_set_lat(IntPtr ptr, IntPtr val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void geo_geo_point_set_lon(IntPtr ptr, IntPtr val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_sub(IntPtr ptr, IntPtr rhs);
     }
 }

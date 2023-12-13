@@ -88,7 +88,7 @@ namespace AviationCalcUtilNet.Magnetic
                 var ptPtr = MagneticTileGetCenterPoint(ptr);
                 if (ptPtr == IntPtr.Zero)
                 {
-                    return new GeoPoint(0, 0);
+                    return new GeoPoint();
                 }
                 return new GeoPoint(ptPtr);
             }
