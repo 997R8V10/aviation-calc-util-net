@@ -14,6 +14,13 @@ namespace AviationCalcUtilNet.InteropTools
     }
 
     [StructLayout(LayoutKind.Sequential)]
+    internal struct InteropWindStruct
+    {
+        internal IntPtr dir;
+        internal IntPtr spd;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
     internal struct InteropSpeedMachStruct
     {
         internal IntPtr speed;

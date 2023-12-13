@@ -2,44 +2,25 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using AviationCalcUtilNet.Geo;
 using AviationCalcUtilNet.GeoTools;
+using AviationCalcUtilNet.InteropTools;
+using AviationCalcUtilNet.Units;
 
 namespace AviationCalcUtilNet.Atmos.Grib
 {
-    public class GribDataPoint
+    public class GribDataPoint : ICloneable
     {
         internal IntPtr ptr;
 
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CreateGribDataPoint(double lat, double lon, int level_hPa);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void DisposeGribDataPoint(IntPtr point);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribDataPointGetDistanceFrom(IntPtr point, IntPtr pos);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr GribDataPointToString(IntPtr point);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribDataPointGetLatitude(IntPtr point);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribDataPointGetLongitude(IntPtr point);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribDataPointGetLongitudeNormalized(IntPtr point);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribDataPointGetGeoPotentialHeightM(IntPtr point);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void GribDataPointSetGeoPotentialHeightM(IntPtr point, double newGeoPotHtM);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribDataPointGetGeoPotentialHeightFt(IntPtr point);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern int GribDataPointGetLevelHPa(IntPtr point);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribDataPointGetTempK(IntPtr point);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void GribDataPointSetTempK(IntPtr point, double newTempK);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribDataPointGetTempC(IntPtr point);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribDataPointGetVMpers(IntPtr point);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void GribDataPointSetVMpers(IntPtr point, double newVMpers);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribDataPointGetUMpers(IntPtr point);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void GribDataPointSetUMpers(IntPtr point, double newUMpers);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribDataPointGetWindSpeedMpers(IntPtr point);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribDataPointGetWindSpeedKts(IntPtr point);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribDataPointGetWindDirRads(IntPtr point);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribDataPointGetWindDirDegs(IntPtr point);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribDataPointGetRelHumidity(IntPtr point);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void GribDataPointSetRelHumidity(IntPtr point, double newRelHumidity);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double GribDataPointGetSfcPressHPa(IntPtr point);
-        [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void GribDataPointSetSfcPressHPa(IntPtr point, double newSfcPressHPa);
-
-        public GribDataPoint(double lat, double lon, int level_hPa)
+        public GribDataPoint()
         {
-            ptr = CreateGribDataPoint(lat, lon, level_hPa);
+            ptr = atmos_grib_grib_data_point_default();
+        }
+
+        public GribDataPoint(Latitude lat, Longitude lon, Pressure level)
+        {
+            ptr = atmos_grib_grib_data_point_new(lat.ptr, lon.ptr, level.ptr);
         }
 
         internal GribDataPoint(IntPtr ptr)
@@ -47,75 +28,139 @@ namespace AviationCalcUtilNet.Atmos.Grib
             this.ptr = ptr;
         }
 
-        public double GetDistanceFrom(GeoPoint pos)
+        public Length DistanceFrom(GeoPoint pos)
         {
-            return GribDataPointGetDistanceFrom(ptr, pos.ptr);
+            return new Length(atmos_grib_grib_data_point_distance_from(ptr, pos.ptr));
         }
 
-        public override string ToString()
+        public Latitude Lat
         {
-            return Marshal.PtrToStringAnsi(GribDataPointToString(ptr));
+            get => new Latitude(atmos_grib_grib_data_point_lat(ptr));
+            set => atmos_grib_grib_data_point_set_lat(ptr, value.ptr);
         }
 
-        ~GribDataPoint()
+        public Longitude Lon
         {
-            DisposeGribDataPoint(ptr);
+            get => new Longitude(atmos_grib_grib_data_point_lon(ptr));
+            set => atmos_grib_grib_data_point_set_lon(ptr, value.ptr);
         }
 
-        public double Latitude => GribDataPointGetLatitude(ptr);
-
-        public double Longitude => GribDataPointGetLongitude(ptr);
-
-        public double Longitude_Norm => GribDataPointGetLongitudeNormalized(ptr);
-
-        public double GeoPotentialHeight_M
+        public Length GeoPotentialHeight
         {
-            get => GribDataPointGetGeoPotentialHeightM(ptr);
-            set => GribDataPointSetGeoPotentialHeightM(ptr, value);
+            get => new Length(atmos_grib_grib_data_point_geo_pot_height(ptr));
+            set => atmos_grib_grib_data_point_set_geo_pot_height(ptr, value.ptr);
         }
 
-        public double GeoPotentialHeight_Ft => GribDataPointGetGeoPotentialHeightFt(ptr);
-
-        public double Level_hPa => GribDataPointGetLevelHPa(ptr);
-
-        public double Temp_K
+        public Pressure LevelPressure
         {
-            get => GribDataPointGetTempK(ptr);
-            set => GribDataPointSetTempK(ptr, value);
+            get => new Pressure(atmos_grib_grib_data_point_level_pressure(ptr));
+            set => atmos_grib_grib_data_point_set_level_pressure(ptr, value.ptr);
         }
 
-        public double Temp_C => GribDataPointGetTempC(ptr);
-
-        public double V_mpers
+        public Temperature Temp
         {
-            get => GribDataPointGetVMpers(ptr);
-            set => GribDataPointSetVMpers(ptr, value);
+            get => new Temperature(atmos_grib_grib_data_point_temp(ptr));
+            set => atmos_grib_grib_data_point_set_temp(ptr, value.ptr);
         }
 
-        public double U_mpers
+        public Velocity V
         {
-            get => GribDataPointGetUMpers(ptr);
-            set => GribDataPointSetUMpers(ptr, value);
+            get => new Velocity(atmos_grib_grib_data_point_v(ptr));
+            set => atmos_grib_grib_data_point_set_v(ptr, value.ptr);
         }
 
-        public double WSpeed_mpers => GribDataPointGetWindSpeedMpers(ptr);
+        public Velocity U
+        {
+            get => new Velocity(atmos_grib_grib_data_point_u(ptr));
+            set => atmos_grib_grib_data_point_set_u(ptr, value.ptr);
+        }
 
-        public double WSpeed_kts => GribDataPointGetWindSpeedKts(ptr);
-
-        public double WDir_rads => GribDataPointGetWindDirRads(ptr);
-
-        public double WDir_deg => GribDataPointGetWindDirDegs(ptr);
+        public (Bearing windDir, Velocity windSpd) Wind
+        {
+            get
+            {
+                var str = atmos_grib_grib_data_point_wind(ptr);
+                return (new Bearing(str.dir), new Velocity(str.spd));
+            }
+        }
 
         public double RelativeHumidity
         {
-            get => GribDataPointGetRelHumidity(ptr);
-            set => GribDataPointSetRelHumidity(ptr, value);
+            get => atmos_grib_grib_data_point_rh(ptr);
+            set => atmos_grib_grib_data_point_set_rh(ptr, value);
         }
 
-        public double SfcPress_hPa
+        public Pressure SfcPress
         {
-            get => GribDataPointGetSfcPressHPa(ptr);
-            set => GribDataPointSetSfcPressHPa(ptr, value);
+            get => new Pressure(atmos_grib_grib_data_point_sfc_press(ptr));
+            set => atmos_grib_grib_data_point_set_sfc_press(ptr, value.ptr);
         }
+
+        /// <inheritdoc />
+        public static bool operator ==(GribDataPoint a, GribDataPoint b) => a != null && a.Equals(b);
+        /// <inheritdoc />
+        public static bool operator !=(GribDataPoint a, GribDataPoint b) => a != null && !a.Equals(b);
+
+        /// <inheritdoc />
+        public object Clone()
+        {
+            return new GribDataPoint(atmos_grib_grib_data_point_clone(ptr));
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            return atmos_grib_grib_data_point_eq(ptr, ((Temperature)obj).ptr);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return ptr.GetHashCode();
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return InteropTools.InteropUtil.MarshallUnmanagedStringPtr(atmos_grib_grib_data_point_to_string(ptr));
+        }
+
+        /// <inheritdoc />
+        ~GribDataPoint()
+        {
+            atmos_grib_grib_data_point_drop(ptr);
+        }
+
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr atmos_grib_grib_data_point_clone(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr atmos_grib_grib_data_point_default();
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr atmos_grib_grib_data_point_distance_from(IntPtr ptr, IntPtr point);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void atmos_grib_grib_data_point_drop(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern bool atmos_grib_grib_data_point_eq(IntPtr ptr, IntPtr rhs);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr atmos_grib_grib_data_point_geo_pot_height(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr atmos_grib_grib_data_point_lat(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr atmos_grib_grib_data_point_level_pressure(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr atmos_grib_grib_data_point_lon(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr atmos_grib_grib_data_point_new(IntPtr lat, IntPtr lon, IntPtr level_pressure);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double atmos_grib_grib_data_point_rh(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void atmos_grib_grib_data_point_set_geo_pot_height(IntPtr ptr, IntPtr val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void atmos_grib_grib_data_point_set_lat(IntPtr ptr, IntPtr val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void atmos_grib_grib_data_point_set_level_pressure(IntPtr ptr, IntPtr val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void atmos_grib_grib_data_point_set_lon(IntPtr ptr, IntPtr val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void atmos_grib_grib_data_point_set_rh(IntPtr ptr, double val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void atmos_grib_grib_data_point_set_sfc_press(IntPtr ptr, IntPtr val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void atmos_grib_grib_data_point_set_temp(IntPtr ptr, IntPtr val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void atmos_grib_grib_data_point_set_u(IntPtr ptr, IntPtr val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void atmos_grib_grib_data_point_set_v(IntPtr ptr, IntPtr val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr atmos_grib_grib_data_point_sfc_press(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr atmos_grib_grib_data_point_temp(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr atmos_grib_grib_data_point_to_string(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr atmos_grib_grib_data_point_u(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr atmos_grib_grib_data_point_v(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern InteropWindStruct atmos_grib_grib_data_point_wind(IntPtr ptr);
     }
 }

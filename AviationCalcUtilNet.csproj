@@ -58,7 +58,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="PShivaraman.AviationCalcUtil" Version="1.2.0">
+    <PackageReference Include="PShivaraman.AviationCalcUtil" Version="2.3.2">
       <!-- See https://docs.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#controlling-dependency-assets. -->
       <!-- We want to make NPM-Targets' .props and .targets files available to consumer projects, so we need to specify
            "build" here. We also need "contentFiles", because without it no "include" attribute is generated on the
@@ -69,5 +69,9 @@
       <!-- We specify "none" here to override the default value, which includes "build". -->
       <PrivateAssets>none</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Aviation\" />
   </ItemGroup>
 </Project>
