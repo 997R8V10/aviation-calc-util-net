@@ -70,7 +70,4 @@
       <PrivateAssets>none</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Units\" />
-  </ItemGroup>
 </Project>
