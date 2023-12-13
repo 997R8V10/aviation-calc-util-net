@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace AviationCalcUtilNet.GeoTools.MagneticTools
+namespace AviationCalcUtilNet.Magnetic
 {
     public class MagneticModelCoefficients
     {
@@ -21,49 +21,49 @@ namespace AviationCalcUtilNet.GeoTools.MagneticTools
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern double MagModelCoeffsGetHDot(IntPtr coeffs);
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr MagModelCoeffsGetPointOnDate(IntPtr coeffs, double modelEpoch, InteropDateStruct dateStruct);
 
-		internal MagneticModelCoefficients(IntPtr ptr)
+        internal MagneticModelCoefficients(IntPtr ptr)
         {
-			this.ptr = ptr;
+            this.ptr = ptr;
         }
 
-		public MagneticModelCoefficients(int n, int m, double g_nm, double h_nm, double g_dot_nm, double h_dot_nm)
+        public MagneticModelCoefficients(int n, int m, double g_nm, double h_nm, double g_dot_nm, double h_dot_nm)
         {
-			ptr = CreateMagModelCoeffs(n, m, g_nm, h_nm, g_dot_nm, h_dot_nm);
+            ptr = CreateMagModelCoeffs(n, m, g_nm, h_nm, g_dot_nm, h_dot_nm);
         }
 
-		public MagneticModelCoefficients GetPointOnDate(double modelEpoch, DateTime date)
+        public MagneticModelCoefficients GetPointOnDate(double modelEpoch, DateTime date)
         {
-			IntPtr retPtr = MagModelCoeffsGetPointOnDate(ptr, modelEpoch, InteropUtil.ManagedDateToDateStruct(date));
-			if (retPtr == IntPtr.Zero)
+            IntPtr retPtr = MagModelCoeffsGetPointOnDate(ptr, modelEpoch, InteropUtil.ManagedDateToDateStruct(date));
+            if (retPtr == IntPtr.Zero)
             {
-				return null;
+                return null;
             }
 
-			return new MagneticModelCoefficients(retPtr);
+            return new MagneticModelCoefficients(retPtr);
         }
 
-		MagneticModelCoefficients GetCopy()
+        MagneticModelCoefficients GetCopy()
         {
-			IntPtr retPtr = CopyMagModelCoeffs(ptr);
-			if (retPtr == IntPtr.Zero)
-			{
-				return null;
-			}
+            IntPtr retPtr = CopyMagModelCoeffs(ptr);
+            if (retPtr == IntPtr.Zero)
+            {
+                return null;
+            }
 
-			return new MagneticModelCoefficients(retPtr);
-		}
+            return new MagneticModelCoefficients(retPtr);
+        }
 
-		public double Degree => MagModelCoeffsGetN(ptr);
+        public double Degree => MagModelCoeffsGetN(ptr);
 
-		public double Order => MagModelCoeffsGetM(ptr);
+        public double Order => MagModelCoeffsGetM(ptr);
 
-		public double MainFieldG => MagModelCoeffsGetG(ptr);
+        public double MainFieldG => MagModelCoeffsGetG(ptr);
 
-		public double MainFieldH => MagModelCoeffsGetH(ptr);
+        public double MainFieldH => MagModelCoeffsGetH(ptr);
 
-		public double SecularVariationG => MagModelCoeffsGetGDot(ptr);
+        public double SecularVariationG => MagModelCoeffsGetGDot(ptr);
 
-		public double SecularVariationH => MagModelCoeffsGetHDot(ptr);
+        public double SecularVariationH => MagModelCoeffsGetHDot(ptr);
 
         ~MagneticModelCoefficients()
         {

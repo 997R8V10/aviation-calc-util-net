@@ -1,5 +1,5 @@
 ﻿using AviationCalcUtilNet.GeoTools;
-using AviationCalcUtilNet.GeoTools.MagneticTools;
+using AviationCalcUtilNet.Magnetic;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

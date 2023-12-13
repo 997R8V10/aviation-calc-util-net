@@ -1,13 +1,14 @@
 using System;
 using System.Runtime.InteropServices;
+using AviationCalcUtilNet.GeoTools;
 using AviationCalcUtilNet.InteropTools;
 
-namespace AviationCalcUtilNet.GeoTools.MagneticTools
+namespace AviationCalcUtilNet.Magnetic
 {
     public class MagneticResult
     {
         internal IntPtr ptr;
-        
+
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr CreateMagneticResult(IntPtr model, IntPtr point, InteropDateStruct dStruct);
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern void DisposeMagneticResult(IntPtr ptr);
         [DllImport("aviationcalc", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr MagneticResultGetMainFieldElements(IntPtr ptr);

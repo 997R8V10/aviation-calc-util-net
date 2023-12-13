@@ -14,6 +14,13 @@ namespace AviationCalcUtilNet.InteropTools
     }
 
     [StructLayout(LayoutKind.Sequential)]
+    internal struct InteropSpeedMachStruct
+    {
+        internal IntPtr speed;
+        internal double mach;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
     internal struct InteropDateStruct
     {
         internal int year;

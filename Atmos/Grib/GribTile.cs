@@ -1,10 +1,11 @@
-﻿using AviationCalcUtilNet.InteropTools;
+﻿using AviationCalcUtilNet.GeoTools;
+using AviationCalcUtilNet.InteropTools;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace AviationCalcUtilNet.GeoTools.GribTools
+namespace AviationCalcUtilNet.Atmos.Grib
 {
     public class GribTile
     {
@@ -57,8 +58,10 @@ namespace AviationCalcUtilNet.GeoTools.GribTools
 
         public DateTime ForecastDateUtc => InteropUtil.NsToManagedDate(GribTileGetForecastDateUtc(ptr));
 
-        public string GribFileName {
-            get {
+        public string GribFileName
+        {
+            get
+            {
                 return Marshal.PtrToStringAnsi(GribTileGetGribFileName(ptr));
             }
         }

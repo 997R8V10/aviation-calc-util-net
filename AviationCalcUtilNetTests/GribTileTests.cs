@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
+using AviationCalcUtilNet.Atmos.GribTools;
 using AviationCalcUtilNet.GeoTools;
-using AviationCalcUtilNet.GeoTools.GribTools;
 using NUnit.Framework;
 
 namespace AviationCalcUtilNetTests

@@ -1,10 +1,11 @@
-﻿using AviationCalcUtilNet.InteropTools;
+﻿using AviationCalcUtilNet.GeoTools;
+using AviationCalcUtilNet.InteropTools;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace AviationCalcUtilNet.GeoTools.MagneticTools
+namespace AviationCalcUtilNet.Magnetic
 {
     public class MagneticTile
     {
@@ -51,8 +52,10 @@ namespace AviationCalcUtilNet.GeoTools.MagneticTools
             return MagneticTileIsValid(ptr, InteropUtil.ManagedDateToDateStruct(date));
         }
 
-        public MagneticResult Data {
-            get {
+        public MagneticResult Data
+        {
+            get
+            {
                 var resptr = MagneticTileGetData(ptr);
                 if (resptr == IntPtr.Zero)
                 {
@@ -78,8 +81,10 @@ namespace AviationCalcUtilNet.GeoTools.MagneticTools
             return !tile.IsPointInTile(point);
         }
 
-        public GeoPoint CenterPoint {
-            get {
+        public GeoPoint CenterPoint
+        {
+            get
+            {
                 var ptPtr = MagneticTileGetCenterPoint(ptr);
                 if (ptPtr == IntPtr.Zero)
                 {

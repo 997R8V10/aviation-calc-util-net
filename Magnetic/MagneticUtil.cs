@@ -1,10 +1,11 @@
-﻿using AviationCalcUtilNet.InteropTools;
+﻿using AviationCalcUtilNet.GeoTools;
+using AviationCalcUtilNet.InteropTools;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace AviationCalcUtilNet.GeoTools.MagneticTools
+namespace AviationCalcUtilNet.Magnetic
 {
     public static class MagneticUtil
     {
