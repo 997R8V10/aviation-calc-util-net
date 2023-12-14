@@ -1,4 +1,5 @@
-﻿using AviationCalcUtilNet.InteropTools;
+﻿using AviationCalcUtilNet.Geo;
+using AviationCalcUtilNet.InteropTools;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -88,6 +89,16 @@ namespace AviationCalcUtilNet.Units
                 return (s.degrees, s.mins, s.secs);
             }
         }
+
+        /// <summary>
+        /// Casts an Angle to a double as rads (radians).
+        /// </summary>
+        public static explicit operator double(Angle v) => v.Value();
+
+        /// <summary>
+        /// Casts a double to a Angle as rads (radians).
+        /// </summary>
+        public static explicit operator Angle(double v) => new Angle(v);
 
         /// <inheritdoc />
         public static Angle operator -(Angle a) => new Angle(units_angle_neg(a.ptr));

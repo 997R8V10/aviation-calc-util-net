@@ -122,6 +122,16 @@ namespace AviationCalcUtilNet.Units
             return units_velocity_static_convert_ftpermin_to_mpers(val);
         }
 
+        /// <summary>
+        /// Casts an Velocity to a double as m/s (meters per second).
+        /// </summary>
+        public static explicit operator double(Velocity v) => v.Value();
+
+        /// <summary>
+        /// Casts a double to a Velocity as m/s (meters per second).
+        /// </summary>
+        public static explicit operator Velocity(double v) => new Velocity(v);
+
         /// <inheritdoc />
         public static Velocity operator -(Velocity a) => new Velocity(units_velocity_neg(a.ptr));
         /// <inheritdoc />

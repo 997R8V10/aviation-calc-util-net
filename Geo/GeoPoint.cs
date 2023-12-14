@@ -23,6 +23,24 @@ namespace AviationCalcUtilNet.GeoTools
         /// <summary>
         /// Creates a new GeoPoint
         /// </summary>
+        /// <param name="lat">Latitude in degrees</param>
+        /// <param name="lon">Longitude in degrees</param>
+        public GeoPoint(double lat, double lon): this(lat, lon, 0) { }
+
+        /// <summary>
+        /// Creates a new GeoPoint
+        /// </summary>
+        /// <param name="lat">Latitude in degrees</param>
+        /// <param name="lon">Longitude in degrees</param>
+        /// <param name="alt">Altitude in feet</param>
+        public GeoPoint(double lat, double lon, double alt)
+        {
+            ptr = geo_geo_point_from_degs_and_ft(lat, lon, alt);
+        }
+
+        /// <summary>
+        /// Creates a new GeoPoint
+        /// </summary>
         public GeoPoint(Latitude lat, Longitude lon, Length alt)
         {
             ptr = geo_geo_point_new(lat.ptr, lon.ptr, alt.ptr);
@@ -31,10 +49,7 @@ namespace AviationCalcUtilNet.GeoTools
         /// <summary>
         /// Creates a new GeoPoint
         /// </summary>
-        public GeoPoint(Latitude lat, Longitude lon)
-        {
-            ptr = geo_geo_point_new(lat.ptr, lon.ptr, new Length().ptr);
-        }
+        public GeoPoint(Latitude lat, Longitude lon) : this(lat, lon, new Length()) { }
 
         internal GeoPoint(IntPtr ptr)
         {
@@ -183,6 +198,7 @@ namespace AviationCalcUtilNet.GeoTools
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern bool geo_geo_point_eq(IntPtr ptr, IntPtr rhs);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_final_bearing(IntPtr ptr, IntPtr rhs);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_flat_distance(IntPtr ptr, IntPtr rhs);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_from_degs_and_ft(double lat, double lon, double alt);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_initial_bearing(IntPtr ptr, IntPtr rhs);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_intersection(IntPtr ptr, IntPtr bearing1, IntPtr other, IntPtr bearing2);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr geo_geo_point_lat(IntPtr ptr);

@@ -122,6 +122,16 @@ namespace AviationCalcUtilNet.Units
             return units_pressure_static_convert_inHg_to_Pa(inhg);
         }
 
+        /// <summary>
+        /// Casts an Pressure to a double as Pa (pascals).
+        /// </summary>
+        public static explicit operator double(Pressure v) => v.Value();
+
+        /// <summary>
+        /// Casts a double to a Pressure as Pa (pascals).
+        /// </summary>
+        public static explicit operator Pressure(double v) => new Pressure(v);
+
         /// <inheritdoc />
         public static Pressure operator -(Pressure a) => new Pressure(units_pressure_neg(a.ptr));
         /// <inheritdoc />

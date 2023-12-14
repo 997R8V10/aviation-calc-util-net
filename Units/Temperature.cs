@@ -91,6 +91,16 @@ namespace AviationCalcUtilNet.Units
             return units_temperature_static_convert_kelvin_to_celsius(val);
         }
 
+        /// <summary>
+        /// Casts an Temperature to a double as K (kelvin).
+        /// </summary>
+        public static explicit operator double(Temperature v) => v.Value();
+
+        /// <summary>
+        /// Casts a double to a Temperature as K (kelvin).
+        /// </summary>
+        public static explicit operator Temperature(double v) => new Temperature(v);
+
         /// <inheritdoc />
         public static Temperature operator -(Temperature a) => new Temperature(units_temperature_neg(a.ptr));
         /// <inheritdoc />

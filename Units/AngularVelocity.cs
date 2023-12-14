@@ -71,6 +71,16 @@ namespace AviationCalcUtilNet.Units
         /// </summary>
         public double DegreesPerSecond => units_angular_velocity_as_degrees_per_second(ptr);
 
+        /// <summary>
+        /// Casts an AngularVelocity to a double as rad/s (radians per second).
+        /// </summary>
+        public static explicit operator double(AngularVelocity v) => v.Value();
+
+        /// <summary>
+        /// Casts a double to a AngularVelocity as rad/s (radians per second).
+        /// </summary>
+        public static explicit operator AngularVelocity(double v) => new AngularVelocity(v);
+
         /// <inheritdoc />
         public static AngularVelocity operator -(AngularVelocity a) => new AngularVelocity(units_angular_velocity_neg(a.ptr));
         /// <inheritdoc />

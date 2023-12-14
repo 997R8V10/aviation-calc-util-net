@@ -161,6 +161,16 @@ namespace AviationCalcUtilNet.Units
             return units_length_static_convert_statute_miles_to_meters(mi);
         }
 
+        /// <summary>
+        /// Casts an Length to a double as m (meters).
+        /// </summary>
+        public static explicit operator double(Length v) => v.Value();
+
+        /// <summary>
+        /// Casts a double to a Length as m (meters).
+        /// </summary>
+        public static explicit operator Length(double v) => new Length(v);
+
         /// <inheritdoc />
         public static Length operator -(Length a) => new Length(units_length_neg(a.ptr));
         /// <inheritdoc />

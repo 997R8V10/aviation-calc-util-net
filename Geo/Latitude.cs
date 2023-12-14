@@ -130,12 +130,22 @@ namespace AviationCalcUtilNet.Geo
         /// <summary>
         /// Casts a Latitude to a double as ° (degrees).
         /// </summary>
-        public static implicit operator double(Latitude v) => v.Degrees;
+        public static explicit operator double(Latitude v) => v.Degrees;
 
         /// <summary>
         /// Casts a double to a Latitude as ° (degrees).
         /// </summary>
-        public static implicit operator Latitude(double v) => FromDegrees(v);
+        public static explicit operator Latitude(double v) => FromDegrees(v);
+
+        /// <summary>
+        /// Casts a Latitude to an Angle
+        /// </summary>
+        public static explicit operator Angle(Latitude v) => v.Angle;
+
+        /// <summary>
+        /// Casts an Angle to a Latitude.
+        /// </summary>
+        public static explicit operator Latitude(Angle v) => new Latitude(v);
 
         /// <inheritdoc />
         public static bool operator ==(Latitude a, Latitude b) => Equals(a, b);

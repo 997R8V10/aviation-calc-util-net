@@ -20,7 +20,7 @@ namespace AviationCalcUtilNetTests
         {
             GeoPoint center = new GeoPoint(38, -77);
             GeoPoint aircraft = new GeoPoint(38, -77);
-            aircraft.MoveBy(Bearing.FromDegrees(280), Length.FromMeters(11000));
+            aircraft.MoveBy((Bearing) 280, (Length) 11000);
             (Bearing requiredCourse, Length aTk, Length xTk) = AviationUtil.CalculateArcCourseIntercept(aircraft, center, Bearing.FromDegrees(250), Bearing.FromDegrees(30), Length.FromMeters(10000), true);
 
             Assert.LessOrEqual(Math.Abs(xTk.Meters - -1000), 1.0);

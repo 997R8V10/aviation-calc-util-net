@@ -69,6 +69,27 @@ namespace AviationCalcUtilNet.Geo
         public double Degrees => geo_bearing_as_degrees(ptr);
 
 
+        /// <summary>
+        /// Casts a Bearing to a double as ° (degrees).
+        /// </summary>
+        public static explicit operator double(Bearing v) => v.Degrees;
+
+        /// <summary>
+        /// Casts a double to a Bearing as ° (degrees).
+        /// </summary>
+        public static explicit operator Bearing(double v) => FromDegrees(v);
+
+        /// <summary>
+        /// Casts a Bearing to an Angle
+        /// </summary>
+        public static explicit operator Angle(Bearing v) => v.Angle;
+
+        /// <summary>
+        /// Casts an Angle to a Bearing.
+        /// </summary>
+        public static explicit operator Bearing(Angle v) => new Bearing(v);
+
+
         /// <inheritdoc />
         public static Bearing operator +(Bearing a, Angle b) => new Bearing(geo_bearing_add_angle(a.ptr, b.ptr));
         /// <inheritdoc />
