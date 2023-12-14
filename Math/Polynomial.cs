@@ -19,7 +19,7 @@ namespace AviationCalcUtilNet.MathTools
 
         public Polynomial(double[] coefficients)
         {
-            ptr = math_polynomial_new(InteropUtil.ManagedDoubleArrayToStruct(coefficients));
+            ptr = math_polynomial_new(coefficients, new UIntPtr((uint) coefficients.Length));
         }
 
         ~Polynomial()
@@ -44,7 +44,7 @@ namespace AviationCalcUtilNet.MathTools
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr math_polynomial_derivative(IntPtr ptr, int n);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void math_polynomial_drop(IntPtr ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double math_polynomial_evaluate(IntPtr ptr, double x);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr math_polynomial_new(InteropArrStructDouble coeffs);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr math_polynomial_new(double[] coeffs, UIntPtr size);
 
     }
 }

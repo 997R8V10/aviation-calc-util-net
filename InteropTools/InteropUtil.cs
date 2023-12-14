@@ -85,25 +85,5 @@ namespace AviationCalcUtilNet.InteropTools
 
             return new TimeSpan(ticks);
         }
-
-        internal static InteropArrStructIntPtr ManagedIntPtrArrayToStruct(IntPtr[] ptrArray)
-        {
-            return new InteropArrStructIntPtr()
-            {
-                ptr = ptrArray,
-                length = new UIntPtr((uint)ptrArray.Length),
-                capacity = new UIntPtr((uint)ptrArray.Length)
-            };
-        }
-
-        internal static InteropArrStructDouble ManagedDoubleArrayToStruct(double[] ptrArray)
-        {
-            return new InteropArrStructDouble()
-            {
-                ptr = ptrArray,
-                length = new UIntPtr((uint)ptrArray.Length),
-                capacity = new UIntPtr((uint)ptrArray.Length)
-            };
-        }
     }
 }

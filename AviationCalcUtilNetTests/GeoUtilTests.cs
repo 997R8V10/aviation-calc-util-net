@@ -18,8 +18,8 @@ namespace AviationCalcUtilNetTests
         [Test]
         public void TestCalculateArcInfo1()
         {
-            GeoPoint center = new GeoPoint(Latitude.FromDegrees(38), Longitude.FromDegrees(-77));
-            GeoPoint aircraft = new GeoPoint(Latitude.FromDegrees(38), Longitude.FromDegrees(-77));
+            GeoPoint center = new GeoPoint(38, -77);
+            GeoPoint aircraft = new GeoPoint(38, -77);
             aircraft.MoveBy(Bearing.FromDegrees(280), Length.FromMeters(11000));
             (Bearing requiredCourse, Length aTk, Length xTk) = AviationUtil.CalculateArcCourseIntercept(aircraft, center, Bearing.FromDegrees(250), Bearing.FromDegrees(30), Length.FromMeters(10000), true);
 

@@ -127,6 +127,16 @@ namespace AviationCalcUtilNet.Geo
         /// </summary>
         public string Nats => InteropUtil.MarshallUnmanagedStringPtr(geo_longitude_as_nats(ptr));
 
+        /// <summary>
+        /// Casts a Latitude to a double as ° (degrees).
+        /// </summary>
+        public static implicit operator double(Longitude v) => v.Degrees;
+
+        /// <summary>
+        /// Casts a double to a Latitude as ° (degrees).
+        /// </summary>
+        public static implicit operator Longitude(double v) => FromDegrees(v);
+
         /// <inheritdoc />
         public static bool operator ==(Longitude a, Longitude b) => Equals(a, b);
         /// <inheritdoc />
