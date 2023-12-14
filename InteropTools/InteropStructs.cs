@@ -51,9 +51,17 @@ namespace AviationCalcUtilNet.InteropTools
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct InteropArrStruct2<T>
+    internal struct InteropArrStructIntPtr
     {
-        internal T[] ptr;
+        internal IntPtr[] ptr;
+        internal UIntPtr length;
+        internal UIntPtr capacity;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct InteropArrStructDouble
+    {
+        internal double[] ptr;
         internal UIntPtr length;
         internal UIntPtr capacity;
     }

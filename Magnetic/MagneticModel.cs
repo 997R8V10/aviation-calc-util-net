@@ -28,7 +28,7 @@ namespace AviationCalcUtilNet.Magnetic
                 coeffsArr[i] = coefficients[i].ptr;
             }
 
-            ptr = magnetic_magnetic_model_new(epoch, name, InteropUtil.ManagedDateToDateStruct(releaseDate), InteropUtil.ManagedArrayToStruct<IntPtr>(coeffsArr));
+            ptr = magnetic_magnetic_model_new(epoch, name, InteropUtil.ManagedDateToDateStruct(releaseDate), InteropUtil.ManagedIntPtrArrayToStruct(coeffsArr));
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace AviationCalcUtilNet.Magnetic
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double magnetic_magnetic_model_epoch(IntPtr ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr magnetic_magnetic_model_from_file([MarshalAs(UnmanagedType.LPStr)] string filename, out IntPtr error_string);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr magnetic_magnetic_model_name(IntPtr ptr);
-        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr magnetic_magnetic_model_new(double epoch, [MarshalAs(UnmanagedType.LPStr)] string name, InteropDateStruct releaseDate, InteropArrStruct2<IntPtr> coeffs);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr magnetic_magnetic_model_new(double epoch, [MarshalAs(UnmanagedType.LPStr)] string name, InteropDateStruct releaseDate, InteropArrStructIntPtr coeffs);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern InteropDateStruct magnetic_magnetic_model_release_date(IntPtr ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void magnetic_magnetic_model_set_epoch(IntPtr ptr, double val);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void magnetic_magnetic_model_set_name(IntPtr ptr, [MarshalAs(UnmanagedType.LPStr)] string val);
