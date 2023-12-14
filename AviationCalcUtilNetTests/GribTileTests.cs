@@ -1,7 +1,8 @@
 using System;
+using System.IO;
 using System.Threading;
+using AviationCalcUtilNet.Atmos.Grib;
 using AviationCalcUtilNet.GeoTools;
-using AviationCalcUtilNet.GeoTools.GribTools;
 using NUnit.Framework;
 
 namespace AviationCalcUtilNetTests
@@ -17,8 +18,9 @@ namespace AviationCalcUtilNetTests
         [Test]
         public void TestFetchGribTile1()
         {
-            var geoPoint = new GeoPoint(0, 0);
-            var tile = GribTile.FindOrCreateGribTile(geoPoint, DateTime.UtcNow);
+            var geoPoint = new GeoPoint();
+            var manager = new GribTileManager(Path.Combine(Path.GetTempPath(), "grib_tile_tests", "grib_tiles"));
+            var tile = manager.FindOrCreateTile(geoPoint, DateTime.UtcNow);
             Assert.NotNull(tile);
             GribDataPoint point;
             int i = 0;

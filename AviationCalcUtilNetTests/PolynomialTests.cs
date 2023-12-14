@@ -9,12 +9,12 @@ namespace AviationCalcUtilNetTests
     public class PolynomialTests
     {
         private Polynomial _polynomial;
-        private List<double> _coefficients;
+        private double[] _coefficients;
 
         [SetUp]
         public void Setup()
         {
-            _coefficients = new List<double>() { 1, 0, 1 };
+            _coefficients = new double[] { 1, 0, 1 };
             //x^2+1
             _polynomial = new Polynomial(_coefficients);
         }
@@ -28,7 +28,7 @@ namespace AviationCalcUtilNetTests
         [Test]
         public void TestGetCoeffs()
         {
-            var coeffsReturned = _polynomial.GetCoefficients();
+            var coeffsReturned = _polynomial.Coefficients;
             string toPrint1 = "";
             foreach (double d in _coefficients)
             {
@@ -50,7 +50,7 @@ namespace AviationCalcUtilNetTests
         public void Derive()
         {
             Polynomial derived = _polynomial.Derivative(1);
-            Assert.True(derived.GetCoefficients().SequenceEqual(new List<double>(){0,2}));
+            Assert.True(derived.Coefficients.SequenceEqual(new List<double>(){0,2}));
         }
     }
 }

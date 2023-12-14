@@ -1,18 +1,23 @@
 ﻿using AviationCalcUtilNet.GeoTools;
-using AviationCalcUtilNet.GeoTools.MagneticTools;
+using AviationCalcUtilNet.Magnetic;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace AviationCalcUtilNetTests
 {
     public class MagneticTests
     {
+        private MagneticModel model;
+
         [SetUp]
         public void SetUp()
         {
-
+            string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string strWorkPath = System.IO.Path.GetDirectoryName(strExeFilePath);
+            model = MagneticModel.FromFile(Path.Combine(strWorkPath, "WMM.COF"));
         }
 
         [Test]
@@ -25,7 +30,7 @@ namespace AviationCalcUtilNetTests
         [Test]
         public void TestMagneticField()
         {
-            MagneticUtil.GetMagneticField(new GeoPoint(0, 0), DateTime.UtcNow);
+            model.CalculateField(new GeoPoint(), DateTime.UtcNow);
         }
     }
 }
