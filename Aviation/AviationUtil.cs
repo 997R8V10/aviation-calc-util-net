@@ -25,7 +25,7 @@ namespace AviationCalcUtilNet.Aviation
         /// <summary>
         /// Calculates radius of turn at a bank angle and ground speed.
         /// </summary>
-        public static Length CalculateRadiusOfTurn(Velocity groundSpeed, Velocity bankAngle)
+        public static Length CalculateRadiusOfTurn(Velocity groundSpeed, Angle bankAngle)
         {
             return new Length(aviation_calculate_radius_of_turn(groundSpeed.ptr, bankAngle.ptr));
         }
@@ -50,7 +50,7 @@ namespace AviationCalcUtilNet.Aviation
         /// <summary>
         /// Calculates the maximum ground speed that will be achieved in a turn.
         /// </summary>
-        public static Velocity CalculateMaxGroundSpeedForTurn(Bearing startBearing, Bearing turnAmount, Bearing windBearing, Velocity windSpeed, Velocity trueAirspeed)
+        public static Velocity CalculateMaxGroundSpeedForTurn(Bearing startBearing, Angle turnAmount, Bearing windBearing, Velocity windSpeed, Velocity trueAirspeed)
         {
             return new Velocity(aviation_calculate_max_ground_speed_for_turn(startBearing.ptr, turnAmount.ptr, windBearing.ptr, windSpeed.ptr, trueAirspeed.ptr));
         }
