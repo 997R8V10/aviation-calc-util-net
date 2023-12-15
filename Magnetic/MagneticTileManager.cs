@@ -4,6 +4,7 @@ using AviationCalcUtilNet.InteropTools;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -20,6 +21,11 @@ namespace AviationCalcUtilNet.Magnetic
         internal MagneticTileManager(IntPtr ptr)
         {
             this.ptr = ptr;
+        }
+
+        public MagneticTileManager()
+        {
+            ptr = magnetic_magnetic_tile_manager_default();
         }
 
         public MagneticTileManager(ref MagneticModel model)
@@ -49,6 +55,7 @@ namespace AviationCalcUtilNet.Magnetic
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern void magnetic_magnetic_tile_manager_drop(IntPtr ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr magnetic_magnetic_tile_manager_find_or_create_tile(IntPtr ptr, IntPtr point, InteropDateStruct date);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr magnetic_magnetic_tile_manager_magnetic_to_true(IntPtr ptr, IntPtr point, InteropDateStruct date, IntPtr magnetic_bearing);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr magnetic_magnetic_tile_manager_default();
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr magnetic_magnetic_tile_manager_new(IntPtr model);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr magnetic_magnetic_tile_manager_true_to_magnetic(IntPtr ptr, IntPtr point, InteropDateStruct date, IntPtr true_bearing);
     }
