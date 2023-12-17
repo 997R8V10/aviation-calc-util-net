@@ -71,6 +71,28 @@ namespace AviationCalcUtilNet.Units
         }
 
         /// <summary>
+        /// Calculates Angle given arc length
+        /// </summary>
+        /// <param name="arcLength">Arc Length</param>
+        /// <param name="radius">Radius of circle</param>
+        /// <returns></returns>
+        public static Angle CalculateAngleFromArcLength(Length arcLength, Length radius)
+        {
+            return new Angle(units_angle_calculate_angle_from_arc_length(arcLength.ptr, radius.ptr));
+        }
+
+        /// <summary>
+        /// Calculate Arc Length
+        /// </summary>
+        /// <param name="angle">Angle</param>
+        /// <param name="radius">Radius of circle</param>
+        /// <returns></returns>
+        public static Length CalculateArcLength(Angle angle, Length radius)
+        {
+            return new Length(units_angle_calculate_arc_length(angle.ptr, radius.ptr));
+        }
+
+        /// <summary>
         /// Gets the angle in rads (radians).
         /// </summary>
         public double Radians => units_angle_as_radians(ptr);
@@ -211,5 +233,7 @@ namespace AviationCalcUtilNet.Units
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double units_angle_as_radians(IntPtr ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double units_angle_as_degrees(IntPtr ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern DegMinSec units_angle_as_deg_min_sec(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_angle_calculate_angle_from_arc_length(IntPtr arc_length, IntPtr radius);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_angle_calculate_arc_length(IntPtr angle, IntPtr radius);
     }
 }

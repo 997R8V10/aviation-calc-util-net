@@ -152,6 +152,22 @@ namespace AviationCalcUtilNet.Aviation
             return new GeoPoint(ret);
         }
 
+        /// <summary>
+        /// Calculates Flight Path Angle (FPA)
+        /// </summary>
+        public static Angle CalculateFlightPathAngle(Velocity groundSpeed, Velocity verticalSpeed)
+        {
+            return new Angle(aviation_calculate_flight_path_angle(groundSpeed.ptr, verticalSpeed.ptr));
+        }
+
+        /// <summary>
+        /// Calculate Vertical Speed from Flight Path Angle
+        /// </summary>
+        public static Velocity CalculateVerticalSpeed(Velocity groundSpeed, Angle flightPathAngle)
+        {
+            return new Velocity(aviation_calculate_vertical_speed(groundSpeed.ptr, flightPathAngle.ptr));
+        }
+
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern InteropCourseInterceptInfo aviation_calculate_arc_course_intercept(IntPtr aircraft, IntPtr arc_center, IntPtr start_radial, IntPtr end_radial, IntPtr radius, bool is_clockwise);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr aviation_calculate_arc_tangent_distance(IntPtr theta, IntPtr r);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr aviation_calculate_bank_angle(IntPtr radius_of_turn, IntPtr ground_speed);
@@ -165,5 +181,7 @@ namespace AviationCalcUtilNet.Aviation
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern InteropTurnLeadDistance aviation_calculate_turn_lead_distance(IntPtr pos, IntPtr wp, IntPtr cur_bearing, IntPtr true_airspeed, IntPtr course, IntPtr wind_direction, IntPtr wind_speed, IntPtr bank_limit, IntPtr turn_rate);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr aviation_find_intersection_to_course(IntPtr position, IntPtr wp, IntPtr cur_bearing, IntPtr course);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr aviation_get_headwind_component(IntPtr wind_bearing, IntPtr wind_speed, IntPtr bearing);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr aviation_calculate_flight_path_angle(IntPtr ground_speed, IntPtr vertical_speed);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr aviation_calculate_vertical_speed(IntPtr ground_speed, IntPtr flight_path_angle);
     }
 }
