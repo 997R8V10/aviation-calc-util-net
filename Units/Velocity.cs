@@ -156,6 +156,8 @@ namespace AviationCalcUtilNet.Units
         /// <inheritdoc />
         public static Velocity operator /(Velocity a, double b) => new Velocity(units_velocity_div_f64(a.ptr, b));
         /// <inheritdoc />
+        public static Acceleration operator /(Velocity a, TimeSpan b) => new Acceleration(units_velocity_div_duration(a.ptr, InteropUtil.ManagedTimeSpanToDateTimeStruct(b)));
+        /// <inheritdoc />
         public static Velocity operator %(Velocity a, double b) => new Velocity(units_velocity_rem_f64(a.ptr, b));
 
         /// <inheritdoc />
@@ -235,6 +237,7 @@ namespace AviationCalcUtilNet.Units
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_velocity_mul_duration(IntPtr ptr, InteropDateTimeStruct rhs);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_velocity_div(IntPtr ptr, IntPtr rhs_ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_velocity_div_f64(IntPtr ptr, double rhs);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_velocity_div_duration(IntPtr ptr, InteropDateTimeStruct rhs);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_velocity_rem(IntPtr ptr, IntPtr rhs_ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_velocity_rem_f64(IntPtr ptr, double rhs);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_velocity_from_meters_per_second(double val);
