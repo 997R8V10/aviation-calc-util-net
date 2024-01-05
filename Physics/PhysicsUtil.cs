@@ -100,6 +100,22 @@ namespace AviationCalcUtilNet.Physics
             return physics_kinematics_time_1_general(displacement, initialVelocity, finalVelocity);
         }
 
+        /// Calculates Acceleration from Initial Velocity, Final Velocity, and Time
+        /// 
+        /// Kinematics Equation = a = (V<sub>f</sub> - V<sub>i</sub>) / t
+        public static Acceleration KinematicsAcceleration(Velocity initialVelocity, Velocity finalVelocity, TimeSpan time)
+        {
+            return new Acceleration(physics_kinematics_acceleration(initialVelocity.ptr, finalVelocity.ptr, InteropUtil.ManagedTimeSpanToDateTimeStruct(time)));
+        }
+
+        /// Calculates Acceleration from Initial Velocity, Final Velocity, and Time
+        /// 
+        /// Kinematics Equation = a = (V<sub>f</sub> - V<sub>i</sub>) / t
+        public static double KinematicsAcceleration(double initialVelocity, double finalVelocity, double time)
+        {
+            return physics_kinematics_acceleration_general(initialVelocity, finalVelocity, time);
+        }
+
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr physics_kinematics_final_velocity(IntPtr initial_velocity, IntPtr acceleration, InteropDateTimeStruct time);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double physics_kinematics_final_velocity_general(double initial_velocity, double acceleration, double time);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr physics_kinematics_displacement_1(IntPtr initial_velocity, IntPtr final_velocity, InteropDateTimeStruct time);
@@ -108,5 +124,7 @@ namespace AviationCalcUtilNet.Physics
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double physics_kinematics_displacement_2_general(double initial_velocity, double acceleration, double time);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern InteropDateTimeStruct physics_kinematics_time_1(IntPtr displacement, IntPtr initial_velocity, IntPtr final_velocity);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double physics_kinematics_time_1_general(double displacement, double initial_velocity, double final_velocity);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr physics_kinematics_acceleration(IntPtr vi, IntPtr vf, InteropDateTimeStruct t);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double physics_kinematics_acceleration_general(double vi, double vf, double t);
     }
 }
