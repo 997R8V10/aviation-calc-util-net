@@ -31,6 +31,7 @@ namespace AviationCalcUtilNet.Magnetic
         public MagneticTileManager(ref MagneticModel model)
         {
             ptr = magnetic_magnetic_tile_manager_new(model.ptr);
+            model.ptr = IntPtr.Zero;
             model = null;
         }
 

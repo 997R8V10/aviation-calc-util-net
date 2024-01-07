@@ -11,13 +11,17 @@ namespace AviationCalcUtilNetTests
     public class MagneticTests
     {
         private MagneticModel model;
+        private MagneticTileManager magTileMgr;
+        private string strWorkPath;
 
         [SetUp]
         public void SetUp()
         {
             string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string strWorkPath = System.IO.Path.GetDirectoryName(strExeFilePath);
+            strWorkPath = System.IO.Path.GetDirectoryName(strExeFilePath);
             model = MagneticModel.FromFile(Path.Combine(strWorkPath, "WMM.COF"));
+            var nmodel = MagneticModel.FromFile(Path.Combine(strWorkPath, "WMM.COF"));
+            magTileMgr = new MagneticTileManager(ref nmodel);
         }
 
         [Test]
@@ -31,6 +35,12 @@ namespace AviationCalcUtilNetTests
         public void TestMagneticField()
         {
             model.CalculateField(new GeoPoint(), DateTime.UtcNow);
+        }
+
+        [Test]
+        public void TestMagneticTileManager1()
+        {
+            Assert.NotNull(magTileMgr.FindOrCreateTile(new GeoPoint(0, 0), DateTime.UtcNow));
         }
     }
 }

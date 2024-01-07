@@ -88,7 +88,10 @@ namespace AviationCalcUtilNet.Magnetic
 
         ~MagneticModel()
         {
-            magnetic_magnetic_model_drop(ptr);
+            if (ptr != IntPtr.Zero)
+            {
+                magnetic_magnetic_model_drop(ptr);
+            }
         }
 
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr magnetic_magnetic_model_calculate_field(IntPtr ptr, IntPtr point, InteropDateStruct date);
