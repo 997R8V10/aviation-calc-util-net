@@ -63,6 +63,15 @@ namespace AviationCalcUtilNet.Units
         }
 
         /// <summary>
+        /// Creates a new Angle.
+        /// </summary>
+        /// <param name="val">Value in % (rise over run)</param>
+        public static Angle FromPercentage(double val)
+        {
+            return new Angle(units_angle_from_percentage(val));
+        }
+
+        /// <summary>
         /// Creates a new Angle from degrees, mins, secs
         /// </summary>
         public static Angle FromDegMinSec(int degrees, uint mins, double secs)
@@ -101,6 +110,11 @@ namespace AviationCalcUtilNet.Units
         /// Gets the angle in ° (degrees).
         /// </summary>
         public double Degrees => units_angle_as_degrees(ptr);
+
+        /// <summary>
+        /// Gets the angle in % (rise over run).
+        /// </summary>
+        public double Percentage => units_angle_as_percentage(ptr);
 
         /// <summary>
         /// Gets the angle in degrees, mins, secs
@@ -230,8 +244,10 @@ namespace AviationCalcUtilNet.Units
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_angle_from_radians(double val);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_angle_from_degrees(double val);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_angle_from_deg_min_sec(DegMinSec val);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_angle_from_percentage(double val);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double units_angle_as_radians(IntPtr ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double units_angle_as_degrees(IntPtr ptr);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern double units_angle_as_percentage(IntPtr ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern DegMinSec units_angle_as_deg_min_sec(IntPtr ptr);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_angle_calculate_angle_from_arc_length(IntPtr arc_length, IntPtr radius);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr units_angle_calculate_arc_length(IntPtr angle, IntPtr radius);
