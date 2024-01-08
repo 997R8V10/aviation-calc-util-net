@@ -37,6 +37,14 @@ namespace AviationCalcUtilNetTests
 
             Assert.That(len2.Meters, Is.EqualTo(-100.0));
         }
+
+        [Test]
+        public void TestAngleAsPercentage()
+        {
+            Angle a = Angle.FromPercentage(100);
+
+            Assert.That(a, Is.EqualTo(Angle.FromDegrees(45)));
+        }
     }
 }
 
