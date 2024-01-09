@@ -115,7 +115,7 @@ namespace AviationCalcUtilNet.Atmos.Grib
                 return false;
             }
 
-            return atmos_grib_grib_data_point_eq(ptr, ((Temperature)obj).ptr);
+            return atmos_grib_grib_data_point_eq(ptr, ((GribDataPoint)obj).ptr);
         }
 
         /// <inheritdoc />
