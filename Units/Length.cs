@@ -248,7 +248,11 @@ namespace AviationCalcUtilNet.Units
         /// <inheritdoc/>
         public override string ToString()
         {
-            return InteropTools.InteropUtil.MarshallUnmanagedStringPtr(units_length_to_string(ptr));
+            if (ptr == IntPtr.Zero)
+            {
+                return "";
+            }
+            return InteropUtil.MarshallUnmanagedStringPtr(units_length_to_string(ptr));
         }
 
         /// <inheritdoc />

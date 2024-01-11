@@ -68,7 +68,7 @@ namespace AviationCalcUtilNet.InteropTools
     [StructLayout(LayoutKind.Sequential)]
     internal struct InteropTurnLeadDistance
     {
-        internal bool is_null;
+        internal byte is_null;
         internal IntPtr turn_lead_dist;
         internal IntPtr radius_of_turn;
         internal IntPtr intersection;

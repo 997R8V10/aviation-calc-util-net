@@ -130,7 +130,7 @@ namespace AviationCalcUtilNet.Aviation
         {
             var ret = aviation_calculate_turn_lead_distance(pos.ptr, wp.ptr, curBearing.ptr, trueAirspeed.ptr, course.ptr, windDirection.ptr, windSpeed.ptr, bankLimit.ptr, turnRate.ptr);
 
-            if (ret.is_null)
+            if (ret.is_null != 0)
             {
                 return null;
             }
