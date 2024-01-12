@@ -30,12 +30,21 @@ namespace AviationCalcUtilNet.Aviation
             return new Length(aviation_calculate_radius_of_turn(groundSpeed.ptr, bankAngle.ptr));
         }
 
+
         /// <summary>
         /// Calculates bank angle at a certain radius of turn and ground_speed
         /// </summary>
         public static Angle CalculateBankAngle(Length radiusOfTurn, Velocity groundSpeed)
         {
             return new Angle(aviation_calculate_bank_angle(radiusOfTurn.ptr, groundSpeed.ptr));
+        }
+
+        /// <summary>
+        /// Calculates the rate of turn given ground speed and bank angle
+        /// </summary>
+        public static AngularVelocity CalculateRateOfTurn(Velocity groundSpeed, Angle bankAngle)
+        {
+            return new AngularVelocity(aviation_calculate_rate_of_turn(groundSpeed.ptr, bankAngle.ptr));
         }
 
         /// <summary>
@@ -172,6 +181,7 @@ namespace AviationCalcUtilNet.Aviation
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr aviation_calculate_arc_tangent_distance(IntPtr theta, IntPtr r);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr aviation_calculate_bank_angle(IntPtr radius_of_turn, IntPtr ground_speed);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern InteropChordLine aviation_calculate_chord_for_turn(IntPtr start_bearing, IntPtr turn_amount, IntPtr radius_of_turn);
+        [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr aviation_calculate_rate_of_turn(IntPtr ground_speed, IntPtr bank_angle);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr aviation_calculate_constant_radius_turn(IntPtr start_bearing, IntPtr turn_amount, IntPtr wind_bearing, IntPtr wind_speed, IntPtr true_airspeed, IntPtr bank_limit, IntPtr turn_rate);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr aviation_calculate_direct_bearing_after_turn(IntPtr start_point, IntPtr end_point, IntPtr radius_of_turn, IntPtr start_bearing);
         [DllImport("aviation_calc_util_ffi", CallingConvention = CallingConvention.Cdecl)] private static extern InteropCourseInterceptInfo aviation_calculate_linear_course_intercept(IntPtr aircraft, IntPtr waypoint, IntPtr course);

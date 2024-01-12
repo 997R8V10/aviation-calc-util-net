@@ -29,7 +29,6 @@ namespace AviationCalcUtilNetTests
                 i++;
             }
             Assert.NotNull(point);
-
         }
     }
 }
