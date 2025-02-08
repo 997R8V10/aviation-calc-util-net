@@ -11,11 +11,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.x.x
+          dotnet-version: 8.x.x
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
@@ -26,18 +26,18 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.x.x
+          dotnet-version: 8.x.x
       - uses: nuget/setup-nuget@v1
         with:
           nuget-version: 'latest'
       - name: Pack NuGet Package
         run: dotnet pack AviationCalcUtilNet.csproj -o ${{ github.workspace }}/out/nuget --include-symbols
       - name: Archive NuGet Files
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: AviationCalcUtilNet-NuGet
           path: |
@@ -48,7 +48,7 @@ jobs:
     needs: create-nuget-package
     steps:
       - name: Download Nuget Files
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: AviationCalcUtilNet-NuGet
           path: ${{ github.workspace }}/NuGet
@@ -67,14 +67,14 @@ jobs:
             ${{ github.workspace}}/bins/*.tar.gz
   upload-nuget-package:
     if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')}}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: create-nuget-package
     steps:
-      - uses: nuget/setup-nuget@v1
+      - uses: nuget/setup-nuget@v2
         with:
           nuget-version: 'latest'
       - name: Download NuGet Packages Contents
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: AviationCalcUtilNet-NuGet
           path: ${{ github.workspace }}/nuget
